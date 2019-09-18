@@ -34,11 +34,11 @@ architecture rtl of control_unit is
    subtype t_ins_code is std_logic_vector (5 downto 0);
 
    -- Codigos de operacion para las diferentes instrucciones:
-   constant OP_RTYPE : t_ins_code := "000000";
-   constant OP_BEQ   : t_ins_code := "000100";
-   constant OP_SW    : t_ins_code := "101011";
-   constant OP_LW    : t_ins_code := "100011";
-   constant OP_LUI   : t_ins_code := "001111";
+   constant OP_RTYPE  : t_ins_code := "000000";
+   constant OP_BEQ    : t_ins_code := "000100";
+   constant OP_SW     : t_ins_code := "101011";
+   constant OP_LW     : t_ins_code := "100011";
+   constant OP_LUI    : t_ins_code := "001111";
 
 begin
 

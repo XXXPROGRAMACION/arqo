@@ -61,3 +61,4 @@ begin
    reg_2 <= regs(conv_integer(reg_2_dir));
 
 end architecture;
+

@@ -11,17 +11,17 @@ use ieee.std_logic_unsigned.all;
 
 entity processor is
    port(
-      Clk         : in  std_logic; -- Reloj activo en flanco subida
-      Reset       : in  std_logic; -- Reset asincrono activo nivel alto
-      -- Instruction memory
-      IAddr      : out std_logic_vector(31 downto 0); -- Direccion Instr
-      IDataIn    : in  std_logic_vector(31 downto 0); -- Instruccion leida
+      clk        : in  std_logic; -- Reloj activo en flanco subida
+      reset      : in  std_logic; -- Reset asincrono activo nivel alto
+      -- ins memory
+      im_dir     : out std_logic_vector(31 downto 0); -- Direccion Instruccion
+      im_ins     : in  std_logic_vector(31 downto 0); -- Instruccion leida
       -- Data memory
-      DAddr      : out std_logic_vector(31 downto 0); -- Direccion
-      DRdEn      : out std_logic;                     -- Habilitacion lectura
-      DWrEn      : out std_logic;                     -- Habilitacion escritura
-      DDataOut   : out std_logic_vector(31 downto 0); -- Dato escrito
-      DDataIn    : in  std_logic_vector(31 downto 0)  -- Dato leido
+      dm_dir     : out std_logic_vector(31 downto 0); -- Direccion
+      dm_rd_en   : out std_logic;                     -- Habilitacion lectura
+      dm_wr_en   : out std_logic;                     -- Habilitacion escritura
+      dm_data_wr : out std_logic_vector(31 downto 0); -- Dato escrito
+      dm_data_rd : in  std_logic_vector(31 downto 0)  -- Dato leido
    );
 end processor;
 
