@@ -1,0 +1,51 @@
+C:/Users/eps/Desktop/arqo/p1/rtl/processor.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/processor.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity processor
+-- Compiling architecture rtl of processor
+
+} {} {}} C:/Users/eps/Desktop/arqo/p1/rtl/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/control_unit.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity control_unit
+-- Compiling architecture rtl of control_unit
+
+} {} {}} C:/Users/eps/Desktop/arqo/p1/rtl/reg_bank.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/reg_bank.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity reg_bank
+-- Compiling architecture rtl of reg_bank
+
+} {} {}} C:/Users/eps/Desktop/arqo/p1/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/alu.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity alu
+-- Compiling architecture rtl of alu
+
+} {} {}} C:/Users/eps/Desktop/arqo/p1/rtl/alu_control.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/alu_control.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity alu_control
+-- Compiling architecture rtl of alu_control
+
+} {} {}}
