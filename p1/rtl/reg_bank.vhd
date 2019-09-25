@@ -14,15 +14,15 @@ use ieee.std_logic_arith.all;
 
 entity reg_bank is
   port (
-    clk        : in std_logic; -- Reloj activo en flanco de subida
-    reset      : in std_logic; -- reset asíncrono a nivel alto
-    reg_1_dir  : in std_logic_vector(4 downto 0);   -- Dirección para el puerto reg_1
-    reg_1      : out std_logic_vector(31 downto 0); -- Dato del puerto reg_1
-    reg_2_dir  : in std_logic_vector(4 downto 0);   -- Dirección para el puerto reg_2
-    reg_2      : out std_logic_vector(31 downto 0); -- Dato del puerto reg_2
-    reg_wr_dir : in std_logic_vector(4 downto 0);   -- Dirección para el puerto reg_wr
-    reg_wr     : in std_logic_vector(31 downto 0);  -- Dato de entrada reg_wr
-    wr_en      : in std_logic -- Habilitación de la escritura de reg_wr
+    clk        : in  std_logic;
+    reset      : in  std_logic;
+    reg_1_dir  : in  std_logic_vector( 4 downto 0);
+    reg_2_dir  : in  std_logic_vector( 4 downto 0);
+    reg_wr_dir : in  std_logic_vector( 4 downto 0);
+    reg_wr     : in  std_logic_vector(31 downto 0);
+    wr_en      : in  std_logic;
+    reg_1      : out std_logic_vector(31 downto 0);
+    reg_2      : out std_logic_vector(31 downto 0)
   ); 
 end reg_bank;
 

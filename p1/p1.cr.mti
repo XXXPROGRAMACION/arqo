@@ -1,4 +1,4 @@
-C:/Users/eps/Desktop/arqo/p1/rtl/processor.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/processor.vhd
+H:/arqo/p1/rtl/processor.vhd {0 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/processor.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -7,8 +7,33 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STD_LOGIC_UNSIGNED
 -- Compiling entity processor
 -- Compiling architecture rtl of processor
+** Error: H:/arqo/p1/rtl/processor.vhd(105): (vcom-1389) OTHERS aggregate cannot be operand of operator with unconstrained array formal.
 
-} {} {}} C:/Users/eps/Desktop/arqo/p1/rtl/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/control_unit.vhd
+** Error: H:/arqo/p1/rtl/processor.vhd(116): (vcom-1035) Formal port "ins_code" has OPEN or no actual associated with it.
+
+** Error: H:/arqo/p1/rtl/processor.vhd(118): No feasible entries for infix operator "=".
+** Error: H:/arqo/p1/rtl/processor.vhd(118): Type error resolving infix expression "=" as type std.STANDARD.BOOLEAN.
+** Error: H:/arqo/p1/rtl/processor.vhd(129): (vcom-1484) Unknown formal identifier "funct".
+
+** Error: H:/arqo/p1/rtl/processor.vhd(134): No feasible entries for infix operator "=".
+** Error: H:/arqo/p1/rtl/processor.vhd(134): Type error resolving infix expression "=" as type std.STANDARD.BOOLEAN.
+** Error: H:/arqo/p1/rtl/processor.vhd(135): No feasible entries for infix operator "=".
+** Error: H:/arqo/p1/rtl/processor.vhd(135): Type error resolving infix expression "=" as type std.STANDARD.BOOLEAN.
+** Error: H:/arqo/p1/rtl/processor.vhd(153): No feasible entries for infix operator "sll".
+** Error: H:/arqo/p1/rtl/processor.vhd(153): Bad expression in right operand of infix expression "+".
+** Error: H:/arqo/p1/rtl/processor.vhd(153): Type error resolving infix expression "+" as type ieee.std_logic_1164.STD_LOGIC_VECTOR.
+** Error: H:/arqo/p1/rtl/processor.vhd(155): Cannot read output "im_dir".
+	VHDL 2008 allows reading outputs.
+	This facility is enabled by compiling with -2008.
+** Warning: [14] H:/arqo/p1/rtl/processor.vhd(134): (vcom-1272) Length of expected is 32; length of slice name is 5.
+
+** Warning: [14] H:/arqo/p1/rtl/processor.vhd(134): (vcom-1272) Length of expected is 32; length of slice name is 5.
+
+** Error: H:/arqo/p1/rtl/processor.vhd(142): (vcom-1272) Length of formal "reg_wr_dir" is 5; length of actual is 32.
+
+** Error: H:/arqo/p1/rtl/processor.vhd(165): VHDL Compiler exiting
+
+} {10.0 11.0 12.0 13.0 14.0 17.0 18.0 26.0 32.0 33.0 34.0 35.0} {}} H:/arqo/p1/rtl/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/control_unit.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -18,7 +43,7 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Compiling entity control_unit
 -- Compiling architecture rtl of control_unit
 
-} {} {}} C:/Users/eps/Desktop/arqo/p1/rtl/reg_bank.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/reg_bank.vhd
+} {} {}} H:/arqo/p1/rtl/reg_bank.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/reg_bank.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -28,7 +53,17 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Compiling entity reg_bank
 -- Compiling architecture rtl of reg_bank
 
-} {} {}} C:/Users/eps/Desktop/arqo/p1/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/alu.vhd
+} {} {}} H:/arqo/p1/rtl/alu_control.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/alu_control.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity control
+-- Compiling architecture rtl of control
+
+} {} {}} H:/arqo/p1/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/alu.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -37,15 +72,5 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STD_LOGIC_UNSIGNED
 -- Compiling entity alu
 -- Compiling architecture rtl of alu
-
-} {} {}} C:/Users/eps/Desktop/arqo/p1/rtl/alu_control.vhd {1 {vcom -work work -2002 -explicit -vopt C:/Users/eps/Desktop/arqo/p1/rtl/alu_control.vhd
-Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity alu_control
--- Compiling architecture rtl of alu_control
 
 } {} {}}

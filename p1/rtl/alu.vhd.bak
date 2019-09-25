@@ -14,10 +14,10 @@ use ieee.std_logic_unsigned.all;
 
 entity alu is
   port (
-    op_a    : in  std_logic_vector (31 downto 0); -- opo A
-    op_b    : in  std_logic_vector (31 downto 0); -- opo B
-    control : in  std_logic_vector ( 3 downto 0); -- Codigo de control=op. a ejecutar
-    res     : out std_logic_vector (31 downto 0); -- resado
+    op_a    : in  std_logic_vector(31 downto 0); -- opo A
+    op_b    : in  std_logic_vector(31 downto 0); -- opo B
+    control : in  std_logic_vector( 3 downto 0); -- Codigo de control=op. a ejecutar
+    res     : out std_logic_vector(31 downto 0); -- resado
     z_flag  : out std_logic                       -- Flag Z
   );
 end alu;
@@ -25,18 +25,18 @@ end alu;
 architecture rtl of alu is
   
   -- Codigos de control:
-  constant ALU_OR  : std_logic_vector (3 downto 0) := "0111";   
-  constant ALU_NOT : std_logic_vector (3 downto 0) := "0101";
-  constant ALU_XOR : std_logic_vector (3 downto 0) := "0110";
-  constant ALU_AND : std_logic_vector (3 downto 0) := "0100";
-  constant ALU_ADD : std_logic_vector (3 downto 0) := "0000";
-  constant ALU_SUB : std_logic_vector (3 downto 0) := "0001";
-  constant ALU_SLT : std_logic_vector (3 downto 0) := "1010";
-  constant ALU_S16 : std_logic_vector (3 downto 0) := "1101";
+  constant ALU_OR  : std_logic_vector(3 downto 0) := "0111";   
+  constant ALU_NOT : std_logic_vector(3 downto 0) := "0101";
+  constant ALU_XOR : std_logic_vector(3 downto 0) := "0110";
+  constant ALU_AND : std_logic_vector(3 downto 0) := "0100";
+  constant ALU_ADD : std_logic_vector(3 downto 0) := "0000";
+  constant ALU_SUB : std_logic_vector(3 downto 0) := "0001";
+  constant ALU_SLT : std_logic_vector(3 downto 0) := "1010";
+  constant ALU_S16 : std_logic_vector(3 downto 0) := "1101";
 
   -- Senales intermedias:
-  signal sub_ext : std_logic_vector (32 downto 0); -- resta extendida a 33 bits
-  signal res_aux : std_logic_vector (31 downto 0); -- alias interno de res
+  signal sub_ext : std_logic_vector(32 downto 0); -- resta extendida a 33 bits
+  signal res_aux : std_logic_vector(31 downto 0); -- alias interno de res
 
 begin
 
