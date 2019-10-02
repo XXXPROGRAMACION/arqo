@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
 -- Unidad de control principal del micro. Arq0 2019-2020
 --
--- (INCLUIR AQUI LA INFORMACION SOBRE LOS AUTORES)
---
+-- Alejandro Pascual Pozo (alejandro.pascualp@estudiante.uam.es)
+-- Víctor Yrazusta Ibarra (victor.yrazusta@estudiante.uam.es)
 --------------------------------------------------------------------------------
 
 library ieee;

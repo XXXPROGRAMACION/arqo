@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
 -- Bloque de control para la ALU. Arq0 2019-2020.
 --
--- (INCLUIR AQUI LA INFORMACION SOBRE LOS AUTORES, Quitar este mensaje)
---
+-- Alejandro Pascual Pozo (alejandro.pascualp@estudiante.uam.es)
+-- Víctor Yrazusta Ibarra (victor.yrazusta@estudiante.uam.es)
 --------------------------------------------------------------------------------
 
 library ieee;
