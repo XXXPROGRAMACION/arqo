@@ -10,22 +10,31 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 entity processor is
-  port (
-    clk        : in  std_logic;
-    reset      : in  std_logic;
+  port (    
+    clk         : in  std_logic;
+    reset       : in  std_logic;
     -- Instruction memory
-    im_dir     : out std_logic_vector(31 downto 0);
-    im_ins     : in  std_logic_vector(31 downto 0);
+    iAddr      : out std_logic_vector(31 downto 0);
+    iDataIn    : in  std_logic_vector(31 downto 0);
     -- Data memory
-    dm_dir     : out std_logic_vector(31 downto 0);
-    dm_rd_en   : out std_logic;
-    dm_wr_en   : out std_logic;
-    dm_data_wr : out std_logic_vector(31 downto 0);
-    dm_data    : in  std_logic_vector(31 downto 0)
+    dAddr      : out std_logic_vector(31 downto 0);
+    dRdEn      : out std_logic;
+    dWrEn      : out std_logic;
+    dDataOut   : out std_logic_vector(31 downto 0);
+    dDataIn    : in  std_logic_vector(31 downto 0)
   );
 end processor;
 
-architecture rtl of processor is 
+architecture rtl of processor is
+
+  -- Naming convention interface
+  signal im_dir     : std_logic_vector(31 downto 0);
+  signal im_ins     : std_logic_vector(31 downto 0);
+  signal dm_dir     : std_logic_vector(31 downto 0);
+  signal dm_rd_en   : std_logic;
+  signal dm_wr_en   : std_logic;
+  signal dm_data_wr : std_logic_vector(31 downto 0);
+  signal dm_data    : std_logic_vector(31 downto 0);
 
   component control_unit
     port (
@@ -104,6 +113,15 @@ architecture rtl of processor is
   signal ins_dir : std_logic_vector(31 downto 0);
 
 begin
+
+  -- Naming convention interface
+  iAddr <= im_dir;
+  im_ins <= iDataIn;
+  dAddr <= dm_dir;
+  dRdEn <= dm_rd_en;
+  dWrEn <= dm_wr_en;
+  dDataOut <= dm_data_wr;
+  dm_data <= dDataIn;
 
   sign_ext <= "00000000000000000" & im_ins(14 downto 0) when im_ins(15) = '0' else "11111111111111111" & im_ins(14 downto 0);
   im_dir <= ins_dir;

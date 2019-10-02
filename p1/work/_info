@@ -8,6 +8,14 @@ dC:/Users/eps/Desktop/arqo/p1/rtl
 !i10d 8192
 !i10e 25
 !i10f 100
+T_opt
+!s110 1570037741
+V5WLiJZ5;cLc2:?m4G39YH0
+04 12 2 work processor_tb tb 1
+=1-40b034f9e495-5d94dfec-223-1f94
+o-quiet -auto_acc_if_foreign -work work
+n@_opt
+OL;O;10.2e;57
 Ealu
 Z0 w1569301211
 Z1 DPx4 ieee 15 std_logic_arith 0 22 I`lKR?Ob>E^B_e2VdVLiQ0
@@ -22,13 +30,13 @@ L15
 VU]Ti5O;faJ?z[aol]h_F^2
 Z8 OL;C;10.2e;57
 32
-Z9 !s110 1570034829
-Z10 !s108 1570034829.736000
-Z11 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/alu.vhd|
-Z12 !s107 H:/arqo/p1/rtl/alu.vhd|
-Z13 o-work work -2002 -explicit
-Z14 tExplicit 1
+Z9 !s108 1570037490.839000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/alu.vhd|
+Z11 !s107 H:/arqo/p1/rtl/alu.vhd|
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1
 !s100 1YD]13digM;_k[TVD64JX2
+!s110 1570037490
 !i10b 1
 !i111 0
 Artl
@@ -47,12 +55,12 @@ R10
 R11
 R12
 R13
-R14
+Z14 !s110 1570037491
 !s100 cCz0gS9MdnmXdRPF^nE@]1
 !i10b 1
 !i111 0
 Ealu_control
-Z15 w1569301237
+Z15 w1569875353
 R1
 R2
 R3
@@ -62,16 +70,16 @@ Z16 8H:/arqo/p1/rtl/alu_control.vhd
 Z17 FH:/arqo/p1/rtl/alu_control.vhd
 l0
 L12
-VRAG^XFn4K?zPAi?Yi;oja3
+V=KM=b0SSFzicF_OoT5NZ00
 R8
 32
-Z18 !s110 1569434577
-Z19 !s108 1569434576.971000
-Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/alu_control.vhd|
-Z21 !s107 H:/arqo/p1/rtl/alu_control.vhd|
-R13
 R14
-!s100 EGQK=UX`f=RhAI`jg_Ook0
+Z18 !s108 1570037491.227000
+Z19 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/alu_control.vhd|
+Z20 !s107 H:/arqo/p1/rtl/alu_control.vhd|
+R12
+R13
+!s100 WCG=iEhU]BcDaEkAWMkMR0
 !i10b 1
 !i111 0
 Artl
@@ -79,23 +87,23 @@ R1
 R2
 R3
 R4
-DEx4 work 11 alu_control 0 22 RAG^XFn4K?zPAi?Yi;oja3
+DEx4 work 11 alu_control 0 22 =KM=b0SSFzicF_OoT5NZ00
 l44
 L20
-V]ca@m^RL2K]^709W20T_e1
+VcznYN@YBo37OziXHSk]A:0
 R8
 32
+R14
 R18
 R19
 R20
-R21
+R12
 R13
-R14
-!s100 ENMDi36JdalTWFk@F=BU_2
+!s100 ^Emk?He[0cOCKBGZNOK=[0
 !i10b 1
 !i111 0
 Econtrol
-Z22 w1569306368
+Z21 w1569874933
 R1
 R2
 R3
@@ -108,12 +116,12 @@ L12
 Vo7gmL9nfD;;2OQ3N56^aT2
 R8
 32
-Z23 !s110 1570034830
-Z24 !s108 1570034830.154000
+Z22 !s110 1570036110
+Z23 !s108 1570036110.382000
+R19
 R20
-R21
+R12
 R13
-R14
 !s100 zg97HddXc[gC7cf`g[nSd0
 !i10b 1
 !i111 0
@@ -128,35 +136,35 @@ L20
 V<ASCbaL?C@:dD0jSK2Lnd1
 R8
 32
+R22
 R23
-R24
+R19
 R20
-R21
+R12
 R13
-R14
 !s100 ;5j1BlT5z4W1g8P>anBoP0
 !i10b 1
 !i111 0
 Econtrol_unit
-Z25 w1569303325
+Z24 w1569874925
 R1
 R2
 R3
 R4
 R5
-Z26 8H:/arqo/p1/rtl/control_unit.vhd
-Z27 FH:/arqo/p1/rtl/control_unit.vhd
+Z25 8H:/arqo/p1/rtl/control_unit.vhd
+Z26 FH:/arqo/p1/rtl/control_unit.vhd
 l0
 L12
 VT3M7IF]WNfmBlSTlZWTI50
 R8
 32
-R23
-Z28 !s108 1570034830.545000
-Z29 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/control_unit.vhd|
-Z30 !s107 H:/arqo/p1/rtl/control_unit.vhd|
-R13
 R14
+Z27 !s108 1570037491.625000
+Z28 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/control_unit.vhd|
+Z29 !s107 H:/arqo/p1/rtl/control_unit.vhd|
+R12
+R13
 !s100 of3]U_M1c=;FhM7gzLUBV0
 !i10b 1
 !i111 0
@@ -171,41 +179,41 @@ L26
 VCi4>K20obU;a_n^Gl0O>A3
 R8
 32
-R23
+R14
+R27
 R28
 R29
-R30
+R12
 R13
-R14
 !s100 =X=N@nM;XChPC4=FY8gZ70
 !i10b 1
 !i111 0
 Ememory
-Z31 w1569299997
-Z32 DPx4 ieee 16 std_logic_textio 0 22 E=LR>a2bb_I?VV>QDdAdh3
+Z30 w1569299997
+Z31 DPx4 ieee 16 std_logic_textio 0 22 E=LR>a2bb_I?VV>QDdAdh3
 R2
 R1
 R4
 R3
 R5
-Z33 8H:/arqo/p1/sim/memory.vhd
-Z34 FH:/arqo/p1/sim/memory.vhd
+Z32 8H:/arqo/p1/sim/memory.vhd
+Z33 FH:/arqo/p1/sim/memory.vhd
 l0
 L18
 V@g;4PZ08ZicUiMhH<?gSa2
 R8
 32
-Z35 !s110 1570035579
-Z36 !s108 1570035579.228000
-Z37 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/sim/memory.vhd|
-Z38 !s107 H:/arqo/p1/sim/memory.vhd|
+Z34 !s110 1570037493
+Z35 !s108 1570037493.683000
+Z36 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/sim/memory.vhd|
+Z37 !s107 H:/arqo/p1/sim/memory.vhd|
+R12
 R13
-R14
 !s100 REcTO`mUfDc`li?eloc_o0
 !i10b 1
 !i111 0
 Abehavioral
-R32
+R31
 R2
 R1
 R4
@@ -216,36 +224,36 @@ L33
 V5Vh^S0^kM31;MRK=gIXLP1
 R8
 32
+R34
 R35
 R36
 R37
-R38
+R12
 R13
-R14
 !s100 J65X]_5`agHima2iOhRaJ3
 !i10b 1
 !i111 0
 Eprocessor
-Z39 w1569874178
+Z38 w1569876691
 R1
 R2
 R3
 R4
 R5
-Z40 8H:/arqo/p1/rtl/processor.vhd
-Z41 FH:/arqo/p1/rtl/processor.vhd
+Z39 8H:/arqo/p1/rtl/processor.vhd
+Z40 FH:/arqo/p1/rtl/processor.vhd
 l0
 L12
-V99eflkT2Jc[Y9Q5eb@Pe81
+VJD1=GV=aIZdOmLCR<YFlN3
 R8
 32
-Z42 !s110 1570035228
-Z43 !s108 1570035228.495000
-Z44 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/processor.vhd|
-Z45 !s107 H:/arqo/p1/rtl/processor.vhd|
+Z41 !s110 1570037576
+Z42 !s108 1570037576.158000
+Z43 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/processor.vhd|
+Z44 !s107 H:/arqo/p1/rtl/processor.vhd|
+R12
 R13
-R14
-!s100 e?C<ZhVBkNR6KYoGFHii=0
+!s100 UK6Z2`N9L2gDg@ecB4BV:3
 !i10b 1
 !i111 0
 Artl
@@ -253,23 +261,23 @@ R1
 R2
 R3
 R4
-DEx4 work 9 processor 0 22 99eflkT2Jc[Y9Q5eb@Pe81
-l106
+DEx4 work 9 processor 0 22 JD1=GV=aIZdOmLCR<YFlN3
+l115
 L28
-VOajz]3`JEb[JmAR==SoQc0
+VdED:73_c1@Lz25_SBmV;c3
 R8
 32
+R41
 R42
 R43
 R44
-R45
+R12
 R13
-R14
-!s100 X<DcfV5EKFm=ihzkbLjhP3
+!s100 VE:Ic52@C_SPh3NEQS1>P0
 !i10b 1
 !i111 0
 Eprocessor_tb
-R31
+Z45 w1569876843
 R2
 R1
 R3
@@ -279,58 +287,58 @@ Z46 8H:/arqo/p1/sim/processor_tb.vhd
 Z47 FH:/arqo/p1/sim/processor_tb.vhd
 l0
 L14
-VI^m9k2fW99AKDPT:iF^Qm3
-!s100 GXClJz<75eB^<KH4Vm?A`1
+VhVWA9B6ZKIA2nVL6e`BRD1
 R8
 32
-R35
-!i10b 1
-Z48 !s108 1570035579.686000
-Z49 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/sim/processor_tb.vhd|
-Z50 !s107 H:/arqo/p1/sim/processor_tb.vhd|
-!i111 0
+Z48 !s110 1570037734
+Z49 !s108 1570037734.823000
+Z50 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/sim/processor_tb.vhd|
+Z51 !s107 H:/arqo/p1/sim/processor_tb.vhd|
+R12
 R13
-R14
+!s100 0FPWVT35Q>V9[Q`4Tl;Un3
+!i10b 1
+!i111 0
 Atb
 R2
 R1
 R3
 R4
-DEx4 work 12 processor_tb 0 22 I^m9k2fW99AKDPT:iF^Qm3
+DEx4 work 12 processor_tb 0 22 hVWA9B6ZKIA2nVL6e`BRD1
 l78
 L22
 Vdk;`IgZcDTVL89W5Cm^V91
-!s100 <OSb2[1=Q0O8JLVfk:clT0
 R8
 32
-R35
-!i10b 1
 R48
 R49
 R50
-!i111 0
+R51
+R12
 R13
-R14
+!s100 <OSb2[1=Q0O8JLVfk:clT0
+!i10b 1
+!i111 0
 Ereg_bank
-Z51 w1569301939
+Z52 w1569301939
 R1
 R2
 R3
 R4
 R5
-Z52 8H:/arqo/p1/rtl/reg_bank.vhd
-Z53 FH:/arqo/p1/rtl/reg_bank.vhd
+Z53 8H:/arqo/p1/rtl/reg_bank.vhd
+Z54 FH:/arqo/p1/rtl/reg_bank.vhd
 l0
 L15
 VZGKhl1@go;@QaN0C[2m_P1
 R8
 32
-Z54 !s110 1570034831
-Z55 !s108 1570034831.398000
-Z56 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/reg_bank.vhd|
-Z57 !s107 H:/arqo/p1/rtl/reg_bank.vhd|
+Z55 !s110 1570037492
+Z56 !s108 1570037492.620000
+Z57 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|H:/arqo/p1/rtl/reg_bank.vhd|
+Z58 !s107 H:/arqo/p1/rtl/reg_bank.vhd|
+R12
 R13
-R14
 !s100 71BL0OWj4RDg<MF_NME4c1
 !i10b 1
 !i111 0
@@ -345,12 +353,12 @@ L29
 VTn;ZG7mPBCL_5zVEJZg@03
 R8
 32
-R54
 R55
 R56
 R57
+R58
+R12
 R13
-R14
 !s100 TPnmE<_8BoJ<fnO4C_`8a3
 !i10b 1
 !i111 0

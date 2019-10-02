@@ -9,15 +9,15 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
-entity control is
+entity alu_control is
   port (
     alu_op  : in  std_logic_vector(1 downto 0);
     func    : in  std_logic_vector(5 downto 0);
     control : out std_logic_vector(3 downto 0)
   );
-end control;
+end alu_control;
 
-architecture rtl of control is
+architecture rtl of alu_control is
   
   -- Codigos de operacion para la ALU:
   constant OP_FUNC : std_logic_vector(1 downto 0) := "00";
