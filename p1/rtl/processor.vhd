@@ -97,14 +97,19 @@ architecture rtl of processor is
   -- Register bank signals
   signal reg_1      : std_logic_vector(31 downto 0);
   signal reg_2      : std_logic_vector(31 downto 0);
-  signal reg_wr_dir : std_logic_vector(31 downto 0);
+  signal reg_wr_dir : std_logic_vector( 4 downto 0);
   signal reg_wr     : std_logic_vector(31 downto 0);
+
+  -- Instruction memory signals
+  signal ins_dir : std_logic_vector(31 downto 0);
 
 begin
 
-  sign_ext <= (others => im_ins(15)) & im_ins(14 downto 0);
+  sign_ext <= "00000000000000000" & im_ins(14 downto 0) when im_ins(15) = '0' else "11111111111111111" & im_ins(14 downto 0);
+  im_dir <= ins_dir;
 
   control_unit_port_map: control_unit port map (
+    ins_code   => im_ins(31 downto 26),
     branch     => branch,
     mem_to_reg => mem_to_reg,
     mem_wr_en  => mem_wr_en,
@@ -115,7 +120,7 @@ begin
     reg_dst    => reg_dst
   );
 
-  op_b <= reg_2 when alu_src = 0 else sign_ext;
+  op_b <= reg_2 when alu_src = '0' else sign_ext;
 
   alu_port_map: alu port map (
     op_a    => reg_1,
@@ -126,13 +131,13 @@ begin
   );
 
   alu_control_port_map: alu_control port map (
-    funct   => im_ins(5 downto 0),
+    func    => im_ins(5 downto 0),
     alu_op  => alu_op,
     control => control
   );
 
-  reg_wr_dir <= im_ins(20 downto 16) when reg_dst = 0 else im_ins(15 downto 11);
-  reg_wr <= alu_res when mem_to_reg = 0 else dm_data;
+  reg_wr_dir <= im_ins(20 downto 16) when reg_dst = '0' else im_ins(15 downto 11);
+  reg_wr <= alu_res when mem_to_reg = '0' else dm_data;
 
   reg_bank_port_map: reg_bank port map (
     clk        => clk,
@@ -150,9 +155,9 @@ begin
   begin
     if rising_edge(clk) and clk = '1' then
       if branch = '1' and z_flag = '1' then
-        im_dir <= im_dir + 4 + (sign_ext sll 2);
+        ins_dir <= ins_dir + 4 + (sign_ext(28 downto 0) & "00");
       else
-        im_dir <= im_dir + 4;
+        ins_dir <= ins_dir + 4;
       end if;
     end if;
   end process;
