@@ -138,6 +138,9 @@ begin
     reg_dst    => reg_dst
   );
 
+  dm_rd_en <= mem_wr_en;
+  dm_wr_en <= mem_rd_en;
+
   op_b <= reg_2 when alu_src = '0' else sign_ext;
 
   alu_port_map: alu port map (
@@ -147,6 +150,8 @@ begin
     res     => alu_res,
     z_flag  => z_flag
   );
+
+  dm_dir <= alu_res;
 
   alu_control_port_map: alu_control port map (
     func    => im_ins(5 downto 0),
@@ -169,20 +174,21 @@ begin
     reg_2      => reg_2
   );
 
-  process (clk)
+  dm_data_wr <= reg_2;
+
+  process (clk, reset)
+    variable ins_dir_aux : std_logic_vector(31 downto 0);
   begin
-    if rising_edge(clk) and clk = '1' then
+    if reset = '1' then
+      ins_dir <= (others => '0');
+    elsif rising_edge(clk) and clk = '1' then
       if branch = '1' and z_flag = '1' then
-        ins_dir <= ins_dir + 4 + (sign_ext(28 downto 0) & "00");
+        ins_dir_aux := ins_dir + 4 + (sign_ext(29 downto 0) & "00");
       else
-        ins_dir <= ins_dir + 4;
+        ins_dir_aux := ins_dir + 4;
       end if;
+      ins_dir <= ins_dir_aux;
     end if;
   end process;
 
-  dm_dir <= alu_res;
-  dm_rd_en <= mem_rd_en;
-  dm_wr_en <= mem_wr_en;
-  dm_data_wr <= reg_2;
-  
 end architecture;
