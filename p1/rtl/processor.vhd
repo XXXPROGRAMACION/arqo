@@ -39,14 +39,14 @@ architecture rtl of processor is
   component control_unit
     port (
       ins_code   : in  std_logic_vector(5 downto 0);
-      branch     : out std_logic;
-      mem_to_reg : out std_logic;
-      mem_wr_en  : out std_logic;
-      mem_rd_en  : out std_logic;
       alu_src    : out std_logic;
       alu_op     : out std_logic_vector(1 downto 0);
-      reg_wr_en  : out std_logic;
-      reg_dst    : out std_logic
+      reg_dst    : out std_logic;
+      branch     : out std_logic;
+      mem_wr_en  : out std_logic;
+      mem_rd_en  : out std_logic;
+      mem_to_reg : out std_logic;
+      reg_wr_en  : out std_logic
     );
   end component;
 
@@ -81,36 +81,31 @@ architecture rtl of processor is
       reg_2      : out std_logic_vector(31 downto 0)
     );
   end component;
-  
-  -- Sign extend signal
-  signal sign_ext : std_logic_vector(31 downto 0);
 
-  -- Control unit signals
-  signal branch     : std_logic;
-  signal mem_to_reg : std_logic;
-  signal mem_wr_en  : std_logic;
-  signal mem_rd_en  : std_logic;
-  signal alu_src    : std_logic;
-  signal alu_op     : std_logic_vector(1 downto 0);
-  signal reg_wr_en  : std_logic;
-  signal reg_dst    : std_logic;
-
-  -- ALU signals
-  signal op_b    : std_logic_vector(31 downto 0);
-  signal alu_res : std_logic_vector(31 downto 0);
-  signal z_flag  : std_logic;
-
-  -- ALU control signal
-  signal control : std_logic_vector(3 downto 0);
-
-  -- Register bank signals
-  signal reg_1      : std_logic_vector(31 downto 0);
-  signal reg_2      : std_logic_vector(31 downto 0);
-  signal reg_wr_dir : std_logic_vector( 4 downto 0);
-  signal reg_wr     : std_logic_vector(31 downto 0);
-
-  -- Instruction memory signals
+  -- IF segment
   signal ins_dir : std_logic_vector(31 downto 0);
+  signal pc_if  : std_logic_vector(31 downto 0);
+  signal ins_if : std_logic_vector(31 downto 0);
+
+  -- ID segment
+  signal pc_id        : std_logic_vector(31 downto 0);
+  signal ins_id       : std_logic_vector(31 downto 0);
+  signal reg_1_id     : std_logic_vector(31 downto 0);
+  signal reg_2_id     : std_logic_vector(31 downto 0);
+  signal reg_dir_1_id : std_logic_vector( 4 downto 0);
+  signal reg_dir_2_id : std_logic_vector( 4 downto 0);
+  signal sig_ext_id   : std_logic_vector(31 downto 0);
+
+  signal alu_src_id    : std_logic;
+  signal alu_op_id     : std_logic_vector(1 downto 0);
+  signal reg_dst_id    : std_logic;
+
+  signal branch_id     : std_logic;
+  signal mem_wr_en_id  : std_logic;
+  signal mem_rd_en_id  : std_logic;
+  
+  signal mem_to_reg_id : std_logic;
+  signal reg_wr_en_id  : std_logic;
 
 begin
 
