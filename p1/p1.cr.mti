@@ -8,16 +8,6 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Compiling entity control_unit
 -- Compiling architecture rtl of control_unit
 
-} {} {}} H:/arqo/p1/sim/processor_tb.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/sim/processor_tb.vhd
-Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity processor_tb
--- Compiling architecture tb of processor_tb
-
 } {} {}} H:/arqo/p1/sim/memory.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/sim/memory.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
@@ -29,6 +19,16 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Compiling entity memory
 -- Compiling architecture Behavioral of memory
 
+} {} {}} H:/arqo/p1/sim/processor_tb.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/sim/processor_tb.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity processor_tb
+-- Compiling architecture tb of processor_tb
+
 } {} {}} H:/arqo/p1/rtl/reg_bank.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/reg_bank.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
@@ -39,16 +39,6 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Compiling entity reg_bank
 -- Compiling architecture rtl of reg_bank
 
-} {} {}} H:/arqo/p1/rtl/alu_control.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/alu_control.vhd
-Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity alu_control
--- Compiling architecture rtl of alu_control
-
 } {} {}} H:/arqo/p1/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/alu.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
@@ -58,5 +48,15 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STD_LOGIC_UNSIGNED
 -- Compiling entity alu
 -- Compiling architecture rtl of alu
+
+} {} {}} H:/arqo/p1/rtl/alu_control.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/p1/rtl/alu_control.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity alu_control
+-- Compiling architecture rtl of alu_control
 
 } {} {}}
