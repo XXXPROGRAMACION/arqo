@@ -16,8 +16,8 @@ entity reg_bank is
   port (
     clk        : in  std_logic;
     reset      : in  std_logic;
-    reg_1_dir  : in  std_logic_vector( 4 downto 0);
-    reg_2_dir  : in  std_logic_vector( 4 downto 0);
+    reg_dir_1  : in  std_logic_vector( 4 downto 0);
+    reg_dir_2  : in  std_logic_vector( 4 downto 0);
     reg_wr_dir : in  std_logic_vector( 4 downto 0);
     reg_wr     : in  std_logic_vector(31 downto 0);
     wr_en      : in  std_logic;
@@ -57,7 +57,7 @@ begin
   ------------------------------------------------------
   -- Lectura de registros
   ------------------------------------------------------
-  reg_1 <= regs(conv_integer(reg_1_dir));
-  reg_2 <= regs(conv_integer(reg_2_dir));
+  reg_1 <= regs(conv_integer(reg_dir_1));
+  reg_2 <= regs(conv_integer(reg_dir_2));
 
 end architecture;

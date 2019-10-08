@@ -32,7 +32,7 @@ architecture rtl of alu is
   constant ALU_ADD : std_logic_vector(3 downto 0) := "0000";
   constant ALU_SUB : std_logic_vector(3 downto 0) := "0001";
   constant ALU_SLT : std_logic_vector(3 downto 0) := "1010";
-  constant ALU_S16 : std_logic_vector(3 downto 0) := "1101";
+  constant ALU_LUI : std_logic_vector(3 downto 0) := "1101";
 
   -- Senales intermedias:
   signal sub_ext : std_logic_vector(32 downto 0); -- resta extendida a 33 bits
@@ -52,7 +52,7 @@ begin
       when ALU_SUB => res_aux <= sub_ext (31 downto 0);
       when ALU_ADD => res_aux <= op_a + op_b;
       when ALU_SLT => res_aux <= x"0000000" & "000" & sub_ext(32);
-      when ALU_S16 => res_aux <= op_b (15 downto 0) & x"0000";
+      when ALU_LUI => res_aux <= op_b (15 downto 0) & x"0000";
       when others => null;
     end case;
   end process;
