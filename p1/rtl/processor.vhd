@@ -138,8 +138,8 @@ begin
     reg_dst    => reg_dst
   );
 
-  dm_rd_en <= mem_wr_en;
-  dm_wr_en <= mem_rd_en;
+  dm_rd_en <= mem_rd_en;
+  dm_wr_en <= mem_wr_en;
 
   op_b <= reg_2 when alu_src = '0' else sign_ext;
 

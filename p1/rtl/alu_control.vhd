@@ -23,6 +23,7 @@ architecture rtl of alu_control is
   constant OP_FUNC : std_logic_vector(1 downto 0) := "00";
   constant OP_ADD  : std_logic_vector(1 downto 0) := "01";
   constant OP_SUB  : std_logic_vector(1 downto 0) := "10";
+  constant OP_LUI  : std_logic_vector(1 downto 0) := "11";
   
   -- Codigos de control de func:
   constant FUNC_OR  : std_logic_vector(5 downto 0) := "100101";
@@ -30,6 +31,7 @@ architecture rtl of alu_control is
   constant FUNC_AND : std_logic_vector(5 downto 0) := "100100";  
   constant FUNC_ADD : std_logic_vector(5 downto 0) := "100000";
   constant FUNC_SUB : std_logic_vector(5 downto 0) := "100010";
+  constant FUNC_STL : std_logic_vector(5 downto 0) := "101010";
   
   -- Codigos de control de la ALU:
   constant ALU_OR  : std_logic_vector(3 downto 0) := "0111";   
@@ -53,10 +55,12 @@ begin
           when FUNC_AND => control <= ALU_AND;
           when FUNC_ADD => control <= ALU_ADD;
           when FUNC_SUB => control <= ALU_SUB;
+          when FUNC_STL => control <= ALU_SLT;
           when others => null;
         end case;
       when OP_ADD => control <= ALU_ADD;
       when OP_SUB => control <= ALU_SUB;
+      when OP_LUI => control <= ALU_S16;
       when others => null;
     end case;
   end process;
