@@ -42,25 +42,6 @@ architecture rtl of processor is
     );
   end component;
 
-  component alu
-    port (
-      op_a    : in  std_logic_vector(31 downto 0);
-      op_b    : in  std_logic_vector(31 downto 0);
-      control : in  std_logic_vector( 3 downto 0);
-      res     : out std_logic_vector(31 downto 0);
-      z_flag  : out std_logic
-    );
-  end component;
-
-  component alu_control
-    port (
-      alu_op  : in  std_logic_vector(1 downto 0);
-      func    : in  std_logic_vector(5 downto 0);
-      reg_dst : in  std_logic;
-      control : out std_logic_vector(3 downto 0)
-    );
-  end component;
-
   component reg_bank
     port (
       clk        : in  std_logic;
@@ -75,6 +56,36 @@ architecture rtl of processor is
     );
   end component;
 
+  component alu_control
+    port (
+      alu_op  : in  std_logic_vector(1 downto 0);
+      func    : in  std_logic_vector(5 downto 0);
+      reg_dst : in  std_logic;
+      control : out std_logic_vector(3 downto 0)
+    );
+  end component;
+
+  component alu
+    port (
+      op_a    : in  std_logic_vector(31 downto 0);
+      op_b    : in  std_logic_vector(31 downto 0);
+      control : in  std_logic_vector( 3 downto 0);
+      res     : out std_logic_vector(31 downto 0);
+      z_flag  : out std_logic
+    );
+  end component;
+  
+  component forwarding_unit
+    port (
+      reg_dir_1        : in  std_logic_vector(5 downto 0);
+      reg_dir_2        : in  std_logic_vector(5 downto 0);
+      reg_dst_dir_mem  : in  std_logic_vector(5 downto 0);
+      reg_dst_dir_wb   : in  std_logic_vector(5 downto 0);
+      alu_op_a_control : out std_logic_vector(1 downto 0);
+      alu_op_b_control : out std_logic_vector(1 downto 0)
+    );
+  end component;
+
   ---------- IF segment signals ----------
   signal pc_if  : std_logic_vector(31 downto 0);
   signal ins_if : std_logic_vector(31 downto 0);
@@ -82,14 +93,16 @@ architecture rtl of processor is
   signal pc_out : std_logic_vector(31 downto 0);
 
   ---------- ID segment signals ----------
-  signal pc_id        : std_logic_vector(31 downto 0);
-  signal ins_id       : std_logic_vector(31 downto 0);
-  signal reg_1_id     : std_logic_vector(31 downto 0);
-  signal reg_2_id     : std_logic_vector(31 downto 0);
-  signal reg_dir_1_id : std_logic_vector( 4 downto 0);
-  signal reg_dir_2_id : std_logic_vector( 4 downto 0);
-  signal sign_ext_id  : std_logic_vector(31 downto 0);
-  signal pc_jmp       : std_logic_vector(31 downto 0);
+  signal pc_id            : std_logic_vector(31 downto 0);
+  signal ins_id           : std_logic_vector(31 downto 0);
+  signal reg_1_id         : std_logic_vector(31 downto 0);
+  signal reg_2_id         : std_logic_vector(31 downto 0);
+  signal reg_dir_1_id     : std_logic_vector( 4 downto 0);
+  signal reg_dir_2_id     : std_logic_vector( 4 downto 0);
+  signal reg_dst_dir_1_id : std_logic_vector( 4 downto 0);
+  signal reg_dst_dir_2_id : std_logic_vector( 4 downto 0);
+  signal sign_ext_id      : std_logic_vector(31 downto 0);
+  signal pc_jmp           : std_logic_vector(31 downto 0);
   -- Used in ID
   signal jmp : std_logic;
   -- Used in EX
@@ -105,18 +118,23 @@ architecture rtl of processor is
   signal reg_wr_en_id  : std_logic;
 
   ---------- EX segment signals ----------
-  signal pc_ex        : std_logic_vector(31 downto 0);
-  signal pc_jmp_ex    : std_logic_vector(31 downto 0);
-  signal reg_1_ex     : std_logic_vector(31 downto 0);
-  signal reg_2_ex     : std_logic_vector(31 downto 0);
-  signal alu_res_ex   : std_logic_vector(31 downto 0);
-  signal reg_dir_1_ex : std_logic_vector( 4 downto 0);
-  signal reg_dir_2_ex : std_logic_vector( 4 downto 0);
-  signal reg_dir_ex   : std_logic_vector( 4 downto 0);
-  signal sign_ext_ex  : std_logic_vector(31 downto 0);
-  signal z_flag_ex    : std_logic;
-  signal alu_op_b     : std_logic_vector(31 downto 0);
-  signal control  : std_logic_vector( 3 downto 0);
+  signal pc_ex            : std_logic_vector(31 downto 0);
+  signal pc_jmp_ex        : std_logic_vector(31 downto 0);
+  signal reg_1_ex         : std_logic_vector(31 downto 0);
+  signal reg_2_ex         : std_logic_vector(31 downto 0);
+  signal alu_res_ex       : std_logic_vector(31 downto 0);
+  signal reg_dir_1_ex     : std_logic_vector( 4 downto 0);
+  signal reg_dir_2_ex     : std_logic_vector( 4 downto 0);
+  signal reg_dst_dir_1_ex : std_logic_vector( 4 downto 0);
+  signal reg_dst_dir_2_ex : std_logic_vector( 4 downto 0);
+  signal reg_dst_dir_ex   : std_logic_vector( 4 downto 0);
+  signal sign_ext_ex      : std_logic_vector(31 downto 0);
+  signal z_flag_ex        : std_logic;
+  signal alu_op_a         : std_logic_vector(31 downto 0);
+  signal alu_op_b         : std_logic_vector(31 downto 0);
+  signal alu_op_a_control : std_logic_vector( 1 downto 0);
+  signal alu_op_b_control : std_logic_vector( 1 downto 0);
+  signal control          : std_logic_vector( 3 downto 0);
   -- Used in EX
   signal alu_src_ex : std_logic;
   signal alu_op_ex  : std_logic_vector(1 downto 0);
@@ -130,13 +148,13 @@ architecture rtl of processor is
   signal reg_wr_en_ex  : std_logic;
 
   ---------- MEM segment signals ----------
-  signal pc_mem      : std_logic_vector(31 downto 0);
-  signal reg_2_mem   : std_logic_vector(31 downto 0);
-  signal alu_res_mem : std_logic_vector(31 downto 0);
-  signal reg_dir_mem : std_logic_vector( 4 downto 0);
-  signal z_flag_mem  : std_logic;
-  signal data_mem    : std_logic_vector(31 downto 0);
-  signal pc_src      : std_logic;
+  signal pc_mem          : std_logic_vector(31 downto 0);
+  signal reg_2_mem       : std_logic_vector(31 downto 0);
+  signal alu_res_mem     : std_logic_vector(31 downto 0);
+  signal reg_dst_dir_mem : std_logic_vector( 4 downto 0);
+  signal z_flag_mem      : std_logic;
+  signal data_mem        : std_logic_vector(31 downto 0);
+  signal pc_src          : std_logic;
   -- Used in MEM
   signal branch_mem    : std_logic;
   signal mem_wr_en_mem : std_logic;
@@ -146,10 +164,10 @@ architecture rtl of processor is
   signal reg_wr_en_mem  : std_logic;
 
   ---------- WB segment signals ----------
-  signal alu_res_wb : std_logic_vector(31 downto 0);
-  signal data_wb    : std_logic_vector(31 downto 0);
-  signal reg_wr     : std_logic_vector(31 downto 0);
-  signal reg_dir_wb : std_logic_vector( 4 downto 0);
+  signal alu_res_wb     : std_logic_vector(31 downto 0);
+  signal data_wb        : std_logic_vector(31 downto 0);
+  signal reg_wr         : std_logic_vector(31 downto 0);
+  signal reg_dst_dir_wb : std_logic_vector( 4 downto 0);
   -- Used in WB
   signal mem_to_reg_wb : std_logic;
   signal reg_wr_en_wb  : std_logic;
@@ -183,17 +201,19 @@ begin
   reg_bank_port_map: reg_bank port map (
     clk        => clk,
     reset      => reset,
-    reg_dir_1  => ins_id(25 downto 21),
-    reg_dir_2  => ins_id(20 downto 16),
-    reg_wr_dir => reg_dir_wb,
+    reg_dir_1  => reg_dir_1_id,
+    reg_dir_2  => reg_dir_2_id,
+    reg_wr_dir => reg_dst_dir_wb,
     wr_en      => reg_wr_en_wb,
     reg_wr     => reg_wr,
     reg_1      => reg_1_id,
     reg_2      => reg_2_id
   );
 
-  reg_dir_1_id <= ins_id(20 downto 16);
-  reg_dir_2_id <= ins_id(15 downto 11);
+  reg_dir_1_id <= ins_id(25 downto 21);
+  reg_dir_2_id <= ins_id(20 downto 16);
+  reg_dst_dir_1_id <= ins_id(20 downto 16);
+  reg_dst_dir_2_id <= ins_id(15 downto 11);
 
   sign_ext_id <= "00000000000000000" & ins_id(14 downto 0) when ins_id(15) = '0' else "11111111111111111" & ins_id(14 downto 0);
   pc_jmp <= "0000" & ins_id(25 downto 0) & "00";
@@ -208,15 +228,32 @@ begin
   );
 
   alu_port_map: alu port map (
-    op_a    => reg_1_ex,
+    op_a    => alu_op_a,
     op_b    => alu_op_b,
     control => control,
     res     => alu_res_ex,
     z_flag  => z_flag_ex
   );
+  
+  forwarding_unit_port_map: forwarding_unit port map (
+    reg_dir_1        => reg_dir_1_ex,
+    reg_dir_2        => reg_dir_2_ex,
+    reg_dst_dir_mem  => reg_dst_dir_mem,
+    reg_dst_dir_wb   => reg_dst_dir_wb, 
+    alu_op_a_control => alu_op_a_control,
+    alu_op_b_control => alu_op_b_control
+  );
 
-  alu_op_b <= reg_2_ex when alu_src_ex = '0' else sign_ext_ex;
-  reg_dir_ex <= reg_dir_1_ex when reg_dst_ex = '0' else reg_dir_2_ex;
+  alu_op_a <=
+    reg_1_ex    when alu_op_a_control = "00" else
+    alu_res_mem when alu_op_a_control = "01" else
+    reg_wr_wb;
+  alu_op_b <=
+    sign_ext_ex when alu_src_ex = '1' else
+    reg_2_ex    when alu_op_b_control = "00" else
+    alu_res_mem when alu_op_b_control = "01" else
+    reg_wr_wb;
+  reg_dst_dir_ex <= reg_dst_dir_1_ex when reg_dst_ex = '0' else reg_dst_dir_2_ex;
   pc_jmp_ex <= pc_ex + (sign_ext_ex(29 downto 0) & "00");
 
   ---------- MEM segment connections ----------
@@ -265,6 +302,8 @@ begin
       reg_2_ex <= (others => '0');
       reg_dir_1_ex <= (others => '0');
       reg_dir_2_ex <= (others => '0');
+      reg_dst_dir_1_ex <= (others => '0');
+      reg_dst_dir_2_ex <= (others => '0');
       sign_ext_ex <= (others => '0');
       -- Used in EX
       alu_src_ex <= '0';
@@ -283,6 +322,8 @@ begin
       reg_2_ex <= reg_2_id;
       reg_dir_1_ex <= reg_dir_1_id;
       reg_dir_2_ex <= reg_dir_2_id;
+      reg_dst_dir_1_ex <= reg_dst_dir_1_id;
+      reg_dst_dir_2_ex <= reg_dst_dir_2_id;
       sign_ext_ex <= sign_ext_id;
       -- Used in EX
       alu_src_ex <= alu_src_id;
@@ -305,7 +346,7 @@ begin
       pc_mem <= (others => '0');
       reg_2_mem <= (others => '0');
       alu_res_mem <= (others => '0');
-      reg_dir_mem <= (others => '0');
+      reg_dst_dir_mem <= (others => '0');
       z_flag_mem <= '0';
       -- Used in MEM
       branch_mem <= '0';
@@ -318,7 +359,7 @@ begin
       pc_mem <= pc_jmp_ex;
       reg_2_mem <= reg_2_ex;
       alu_res_mem <= alu_res_ex;
-      reg_dir_mem <= reg_dir_ex;
+      reg_dst_dir_mem <= reg_dst_dir_ex;
       z_flag_mem <= z_flag_ex;
       -- Used in MEM
       branch_mem <= branch_ex;
@@ -337,7 +378,7 @@ begin
       alu_res_wb <= (others => '0');
       data_wb <= (others => '0');
       alu_res_wb <= (others => '0');
-      reg_dir_wb <= (others => '0');
+      reg_dst_dir_wb <= (others => '0');
       -- Used in WB
       mem_to_reg_wb <= '0';
       reg_wr_en_wb <= '0';
@@ -345,7 +386,7 @@ begin
       alu_res_wb <= alu_res_mem;
       data_wb <= data_mem;
       alu_res_wb <= alu_res_mem;
-      reg_dir_wb <= reg_dir_mem;
+      reg_dst_dir_wb <= reg_dst_dir_mem;
       -- Used in WB
       mem_to_reg_wb <= mem_to_reg_mem;
       reg_wr_en_wb <= reg_wr_en_mem;
