@@ -1,4 +1,14 @@
-H:/arqo/sim/memory.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/sim/memory.vhd
+H:/arqo/rtl/processor.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/processor.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity processor
+-- Compiling architecture rtl of processor
+
+} {} {}} H:/arqo/sim/memory.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/sim/memory.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -18,6 +28,16 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STD_LOGIC_UNSIGNED
 -- Compiling entity control_unit
 -- Compiling architecture rtl of control_unit
+
+} {} {}} H:/arqo/sim/processor_tb.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/sim/processor_tb.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity processor_tb
+-- Compiling architecture tb of processor_tb
 
 } {} {}} H:/arqo/rtl/reg_bank.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/reg_bank.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014

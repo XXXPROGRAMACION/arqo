@@ -77,10 +77,12 @@ architecture rtl of processor is
   
   component forwarding_unit
     port (
-      reg_dir_1        : in  std_logic_vector(5 downto 0);
-      reg_dir_2        : in  std_logic_vector(5 downto 0);
-      reg_dst_dir_mem  : in  std_logic_vector(5 downto 0);
-      reg_dst_dir_wb   : in  std_logic_vector(5 downto 0);
+      reg_dir_1        : in  std_logic_vector(4 downto 0);
+      reg_dir_2        : in  std_logic_vector(4 downto 0);
+      reg_dst_dir_mem  : in  std_logic_vector(4 downto 0);
+      reg_wr_en_mem    : in  std_logic;
+      reg_dst_dir_wb   : in  std_logic_vector(4 downto 0);
+      reg_wr_en_wb     : in  std_logic;
       alu_op_a_control : out std_logic_vector(1 downto 0);
       alu_op_b_control : out std_logic_vector(1 downto 0)
     );
@@ -234,12 +236,14 @@ begin
     res     => alu_res_ex,
     z_flag  => z_flag_ex
   );
-  
+
   forwarding_unit_port_map: forwarding_unit port map (
     reg_dir_1        => reg_dir_1_ex,
     reg_dir_2        => reg_dir_2_ex,
     reg_dst_dir_mem  => reg_dst_dir_mem,
-    reg_dst_dir_wb   => reg_dst_dir_wb, 
+    reg_wr_en_mem    => reg_wr_en_mem,
+    reg_dst_dir_wb   => reg_dst_dir_wb,
+    reg_wr_en_wb     => reg_wr_en_wb,
     alu_op_a_control => alu_op_a_control,
     alu_op_b_control => alu_op_b_control
   );
@@ -247,12 +251,12 @@ begin
   alu_op_a <=
     reg_1_ex    when alu_op_a_control = "00" else
     alu_res_mem when alu_op_a_control = "01" else
-    reg_wr_wb;
+    reg_wr;
   alu_op_b <=
     sign_ext_ex when alu_src_ex = '1' else
     reg_2_ex    when alu_op_b_control = "00" else
     alu_res_mem when alu_op_b_control = "01" else
-    reg_wr_wb;
+    reg_wr;
   reg_dst_dir_ex <= reg_dst_dir_1_ex when reg_dst_ex = '0' else reg_dst_dir_2_ex;
   pc_jmp_ex <= pc_ex + (sign_ext_ex(29 downto 0) & "00");
 
