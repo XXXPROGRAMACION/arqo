@@ -18,7 +18,7 @@ use ieee.std_logic_textio.all;
 entity memory is
    generic(
       INIT_FILENAME   : string := "instrucciones"; -- nombre fichero con datos iniciales
-      MEM_SIZE        : integer := 1024            -- tamanio, en bytes
+      MEM_SIZE        : integer := 1000*16         -- tamanio, en bytes
    );
    Port (
       Clk     : in std_logic ;                     -- Reloj
@@ -59,7 +59,7 @@ begin
          hread(current_line, address);
          hread(current_line, datum);
          assert CONV_INTEGER(address(31 downto 0))<MEM_SIZE 
-            report "Direccion fuera de rango en el fichero de la memoria"
+            report "Direccion fuera de rango en el fichero de la memoria " & integer'image(CONV_INTEGER(address(31 downto 0))) & " >= " & integer'image(MEM_SIZE)
             severity failure;
          memo( CONV_INTEGER( address(31 downto 2) ) ) <= datum;
       end loop;

@@ -57,7 +57,7 @@ begin
   ------------------------------------------------------
   -- Lectura de registros
   ------------------------------------------------------
-  reg_1 <= regs(conv_integer(reg_dir_1));
-  reg_2 <= regs(conv_integer(reg_dir_2));
+  reg_1 <= reg_wr when reg_dir_1 = reg_wr_dir else regs(conv_integer(reg_dir_1));
+  reg_2 <= reg_wr when reg_dir_2 = reg_wr_dir else regs(conv_integer(reg_dir_2));
 
 end architecture;

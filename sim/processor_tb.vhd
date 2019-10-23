@@ -13,8 +13,8 @@ use ieee.std_logic_unsigned.all;
 
 entity processor_tb is
    generic (
-      INIT_FILENAME_INST : string   := "H:/arqo/sim/instrucciones"; -- Fichero con las instrucciones
-      INIT_FILENAME_DATA : string   := "H:/arqo/sim/datos";         -- Fichero con los datos
+      INIT_FILENAME_INST : string   := "H:/arqo/sim/forwarding_test_text"; -- Fichero con las instrucciones
+      INIT_FILENAME_DATA : string   := "H:/arqo/sim/basic_test_data"; -- Fichero con los datos
       N_CYCLES           : positive := 100              -- Numero de ciclos a ejecutar
    );
 end processor_tb;
@@ -40,7 +40,7 @@ architecture tb of processor_tb is
    component memory
       generic(
          INIT_FILENAME   : string := "instrucciones"; -- nombre fichero con datos iniciales
-         MEM_SIZE        : integer := 1024            -- tamanio, en bytes
+         MEM_SIZE        : integer := 1000*16         -- tamanio, en bytes
       );
       Port (
          Clk     : in std_logic ;                     -- Reloj
@@ -111,7 +111,7 @@ begin
    i_data_mem : memory
       generic map (
          INIT_FILENAME => INIT_FILENAME_DATA,
-         MEM_SIZE    => 1024
+         MEM_SIZE    => 1000*16
       )    
       port map(
          Clk     => clk,                       
