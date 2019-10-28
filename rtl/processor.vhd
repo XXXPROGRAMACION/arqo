@@ -88,11 +88,24 @@ architecture rtl of processor is
     );
   end component;
 
+  component hazard_detection_unit
+    port (
+      reg_dir_1   : in  std_logic_vector(4 downto 0);
+      reg_dir_2   : in  std_logic_vector(4 downto 0);
+      reg_dst_dir : in  std_logic_vector(4 downto 0);
+      mem_rd_en   : in  std_logic;
+      pc_wr_en    : out std_logic;
+      if_id_wr_en : out std_logic;
+      id_ex_reset : out std_logic
+    );
+  end component;
+
   ---------- IF segment signals ----------
-  signal pc_if  : std_logic_vector(31 downto 0);
-  signal ins_if : std_logic_vector(31 downto 0);
-  signal pc_in  : std_logic_vector(31 downto 0);
-  signal pc_out : std_logic_vector(31 downto 0);
+  signal pc_if    : std_logic_vector(31 downto 0);
+  signal ins_if   : std_logic_vector(31 downto 0);
+  signal pc_in    : std_logic_vector(31 downto 0);
+  signal pc_out   : std_logic_vector(31 downto 0);
+  signal pc_wr_en : std_logic;
 
   ---------- ID segment signals ----------
   signal pc_id            : std_logic_vector(31 downto 0);
@@ -105,6 +118,7 @@ architecture rtl of processor is
   signal reg_dst_dir_2_id : std_logic_vector( 4 downto 0);
   signal sign_ext_id      : std_logic_vector(31 downto 0);
   signal pc_jmp           : std_logic_vector(31 downto 0);
+  signal if_id_wr_en      : std_logic;
   -- Used in ID
   signal jmp : std_logic;
   -- Used in EX
@@ -137,6 +151,7 @@ architecture rtl of processor is
   signal alu_op_a_control : std_logic_vector( 1 downto 0);
   signal alu_op_b_control : std_logic_vector( 1 downto 0);
   signal control          : std_logic_vector( 3 downto 0);
+  signal id_ex_reset      : std_logic;
   -- Used in EX
   signal alu_src_ex : std_logic;
   signal alu_op_ex  : std_logic_vector(1 downto 0);
@@ -248,6 +263,16 @@ begin
     alu_op_b_control => alu_op_b_control
   );
 
+  hazard_detection_unit_port_map: hazard_detection_unit port map (
+    reg_dir_1   => reg_dir_1_id,
+    reg_dir_2   => reg_dir_2_id,
+    reg_dst_dir => reg_dst_dir_1_ex,
+    mem_rd_en   => mem_rd_en_ex,
+    pc_wr_en    => pc_wr_en,
+    if_id_wr_en => if_id_wr_en,
+    id_ex_reset => id_ex_reset
+  );
+
   alu_op_a <=
     reg_1_ex    when alu_op_a_control = "00" else
     alu_res_mem when alu_op_a_control = "01" else
@@ -280,7 +305,7 @@ begin
   begin
     if reset = '1' then
       pc_out <= (others => '0');
-    elsif rising_edge(clk) and clk = '1' then
+    elsif rising_edge(clk) and clk = '1' and pc_wr_en = '1' then
       pc_out <= pc_in;
     end if;
   end process;
@@ -291,7 +316,7 @@ begin
     if reset = '1' then
       pc_id <= (others => '0');
       ins_id <= (others => '0');
-    elsif rising_edge(clk) and clk = '1' then
+    elsif rising_edge(clk) and clk = '1' and if_id_wr_en = '1' then
       pc_id <= pc_if;
       ins_id <= ins_if;
     end if;
@@ -300,7 +325,7 @@ begin
   ---------- ID/EX register ----------
   process (clk, reset)
   begin
-    if reset = '1' then
+    if reset = '1' or (rising_edge(clk) and clk = '1' and id_ex_reset = '1') then
       pc_ex <= (others => '0');
       reg_1_ex <= (others => '0');
       reg_2_ex <= (others => '0');

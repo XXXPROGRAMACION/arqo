@@ -13,8 +13,8 @@ use ieee.std_logic_unsigned.all;
 
 entity processor_tb is
    generic (
-      INIT_FILENAME_INST : string   := "H:/arqo/sim/forwarding_test_text"; -- Fichero con las instrucciones
-      INIT_FILENAME_DATA : string   := "H:/arqo/sim/basic_test_data"; -- Fichero con los datos
+      INIT_FILENAME_INST : string   := "H:/arqo/sim/beq_test_text"; -- Fichero con las instrucciones
+      INIT_FILENAME_DATA : string   := "H:/arqo/sim/beq_test_data"; -- Fichero con los datos
       N_CYCLES           : positive := 100              -- Numero de ciclos a ejecutar
    );
 end processor_tb;

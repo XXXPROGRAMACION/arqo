@@ -1,15 +1,4 @@
-H:/arqo/sim/memory.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/sim/memory.vhd
-Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Loading package std_logic_textio
--- Compiling entity memory
--- Compiling architecture Behavioral of memory
-
-} {} {}} H:/arqo/rtl/processor.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/processor.vhd
+H:/arqo/rtl/processor.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/processor.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -29,15 +18,36 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Compiling entity control_unit
 -- Compiling architecture rtl of control_unit
 
-} {} {}} H:/arqo/rtl/forwarding_unit.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/forwarding_unit.vhd
+} {} {}} H:/arqo/sim/memory.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/sim/memory.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity forwarding_unit
--- Compiling architecture rtl of forwarding_unit
+-- Loading package std_logic_textio
+-- Compiling entity memory
+-- Compiling architecture Behavioral of memory
+
+} {} {}} H:/arqo/rtl/reg_bank.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/reg_bank.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity reg_bank
+-- Compiling architecture rtl of reg_bank
+
+} {} {}} H:/arqo/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/alu.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity alu
+-- Compiling architecture rtl of alu
 
 } {} {}} H:/arqo/rtl/alu_control.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/alu_control.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
@@ -49,14 +59,24 @@ Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Compiling entity alu_control
 -- Compiling architecture rtl of alu_control
 
-} {} {}} H:/arqo/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/alu.vhd
+} {} {}} H:/arqo/rtl/forwarding_unit.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/forwarding_unit.vhd
 Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity alu
--- Compiling architecture rtl of alu
+-- Compiling entity forwarding_unit
+-- Compiling architecture rtl of forwarding_unit
+
+} {} {}} H:/arqo/rtl/hazard_detection_unit.vhd {1 {vcom -work work -2002 -explicit -vopt H:/arqo/rtl/hazard_detection_unit.vhd
+Model Technology ModelSim SE-64 vcom 10.2e Compiler 2014.06 Jun 20 2014
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity hazard_detection_unit
+-- Compiling architecture rtl of hazard_detection_unit
 
 } {} {}}

@@ -16,14 +16,34 @@ main:
   nop
   nop
   nop
-  add $4, $1, $3 # En r4 un 4
-  add $5, $4, $1 # En r5 un 5
-  add $6, $4, $2 # En r6 un 6
-  add $7, $4, $3 # En r7 un 7
+  add $4, $1, $2 # En r4 un 3
+  beq $3, $4, salto_1
+  nop
+  nop
+  add $10, $1, $zero # En r10 un 1
   nop
   nop
   nop
-  sw $4, 12($zero) # En num3 un 1
+  j fin
+  nop
+  nop
+  nop
+  salto_1:
+  add $4, $2, $2 # En r4 un 4
+  nop
+  nop
+  nop
+  lw $5, 8($zero) # En r5 un 3
+  beq $3, $5, salto_2
+  nop
+  nop
+  nop
+  add $11, $1, $zero # En r11 un 1
+  nop
+  nop
+  nop
+  salto_2:
+  add $5, $2, $3
   nop
   nop
   nop
