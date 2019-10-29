@@ -77,14 +77,14 @@ architecture rtl of processor is
   
   component forwarding_unit
     port (
-      reg_dir_1        : in  std_logic_vector(4 downto 0);
-      reg_dir_2        : in  std_logic_vector(4 downto 0);
-      reg_dst_dir_mem  : in  std_logic_vector(4 downto 0);
-      reg_wr_en_mem    : in  std_logic;
-      reg_dst_dir_wb   : in  std_logic_vector(4 downto 0);
-      reg_wr_en_wb     : in  std_logic;
-      alu_op_a_control : out std_logic_vector(1 downto 0);
-      alu_op_b_control : out std_logic_vector(1 downto 0)
+      reg_dir_1          : in  std_logic_vector(4 downto 0);
+      reg_dir_2          : in  std_logic_vector(4 downto 0);
+      reg_dst_dir_next_1 : in  std_logic_vector(4 downto 0);
+      reg_wr_en_next_1   : in  std_logic;
+      reg_dst_dir_next_2 : in  std_logic_vector(4 downto 0);
+      reg_wr_en_next_2   : in  std_logic;
+      op_a_control       : out std_logic_vector(1 downto 0);
+      op_b_control       : out std_logic_vector(1 downto 0)
     );
   end component;
 
@@ -117,9 +117,14 @@ architecture rtl of processor is
   signal reg_dst_dir_1_id : std_logic_vector( 4 downto 0);
   signal reg_dst_dir_2_id : std_logic_vector( 4 downto 0);
   signal sign_ext_id      : std_logic_vector(31 downto 0);
+  signal reg_1            : std_logic_vector(31 downto 0);
+  signal reg_2            : std_logic_vector(31 downto 0);
+  signal reg_1_control    : std_logic_vector( 1 downto 0);
+  signal reg_2_control    : std_logic_vector( 1 downto 0);
   signal pc_jmp           : std_logic_vector(31 downto 0);
   signal pc_branch        : std_logic_vector(31 downto 0);
   signal pc_src           : std_logic_vector( 1 downto 0);
+  signal if_id_reset      : std_logic;
   signal if_id_wr_en      : std_logic;
   signal branch           : std_logic;
   signal branch_effective : std_logic;
@@ -219,9 +224,29 @@ begin
     reg_wr_dir => reg_dst_dir_wb,
     wr_en      => reg_wr_en_wb,
     reg_wr     => reg_wr,
-    reg_1      => reg_1_id,
-    reg_2      => reg_2_id
+    reg_1      => reg_1,
+    reg_2      => reg_2
   );
+
+  forwarding_unit_reg_port_map: forwarding_unit port map (
+    reg_dir_1          => reg_dir_1_id,
+    reg_dir_2          => reg_dir_2_id,
+    reg_dst_dir_next_1 => reg_dst_dir_ex,
+    reg_wr_en_next_1   => reg_wr_en_ex,
+    reg_dst_dir_next_2 => reg_dst_dir_mem,
+    reg_wr_en_next_2   => reg_wr_en_mem,
+    op_a_control       => reg_1_control,
+    op_b_control       => reg_2_control
+  );
+
+  reg_1_id <=
+    reg_1      when reg_1_control = "00" else
+    alu_res_ex when reg_1_control = "01" else
+    alu_res_mem;
+  reg_2_id <=
+    reg_2      when reg_2_control = "00" else
+    alu_res_ex when reg_2_control = "01" else
+    alu_res_mem;
 
   reg_dir_1_id <= ins_id(25 downto 21);
   reg_dir_2_id <= ins_id(20 downto 16);
@@ -233,6 +258,7 @@ begin
   branch_effective <= '1' when reg_1_id = reg_2_id else '0';
   pc_branch <= pc_id + (sign_ext_id(29 downto 0) & "00");
   pc_src <= "10" when branch = '1' and branch_effective = '1' else "01" when jmp = '1' else "00";
+  if_id_reset <= '1' when pc_src /= "00" else '0';
 
   ---------- EX segment connections ----------
 
@@ -250,15 +276,15 @@ begin
     res     => alu_res_ex
   );
 
-  forwarding_unit_port_map: forwarding_unit port map (
-    reg_dir_1        => reg_dir_1_ex,
-    reg_dir_2        => reg_dir_2_ex,
-    reg_dst_dir_mem  => reg_dst_dir_mem,
-    reg_wr_en_mem    => reg_wr_en_mem,
-    reg_dst_dir_wb   => reg_dst_dir_wb,
-    reg_wr_en_wb     => reg_wr_en_wb,
-    alu_op_a_control => alu_op_a_control,
-    alu_op_b_control => alu_op_b_control
+  forwarding_unit_alu_port_map: forwarding_unit port map (
+    reg_dir_1          => reg_dir_1_ex,
+    reg_dir_2          => reg_dir_2_ex,
+    reg_dst_dir_next_1 => reg_dst_dir_mem,
+    reg_wr_en_next_1   => reg_wr_en_mem,
+    reg_dst_dir_next_2 => reg_dst_dir_wb,
+    reg_wr_en_next_2   => reg_wr_en_wb,
+    op_a_control       => alu_op_a_control,
+    op_b_control       => alu_op_b_control
   );
 
   hazard_detection_unit_port_map: hazard_detection_unit port map (
@@ -308,7 +334,7 @@ begin
   ---------- IF/ID register ----------
   process (clk, reset)
   begin
-    if reset = '1' then
+    if reset = '1' or (rising_edge(clk) and clk = '1' and if_id_reset = '1') then
       pc_id <= (others => '0');
       ins_id <= (others => '0');
     elsif rising_edge(clk) and clk = '1' and if_id_wr_en = '1' then
