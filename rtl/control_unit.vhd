@@ -48,8 +48,8 @@ begin
   mem_to_reg <= '1' when ins_code = INS_LW else '0';
   mem_wr_en <= '1' when ins_code = INS_SW else '0';
   mem_rd_en <= '1' when ins_code = INS_LW else '0';
-  alu_src <= '1' when ins_code /= INS_RTYPE and ins_code /= INS_BEQ else '0';
-  alu_op <= OP_SUB when ins_code = INS_BEQ else OP_SLT when ins_code = INS_SLTI else OP_LUI when ins_code = INS_LUI else OP_ADD;
+  alu_src <= '1' when ins_code /= INS_RTYPE else '0';
+  alu_op <= OP_SLT when ins_code = INS_SLTI else OP_LUI when ins_code = INS_LUI else OP_ADD;
   reg_wr_en <= '1' when ins_code = INS_RTYPE or ins_code = INS_ADDI or ins_code = INS_LW or ins_code = INS_SLTI or ins_code = INS_LUI else '0';
   reg_dst <= '1' when ins_code = INS_RTYPE else '0';
   jmp <= '1' when ins_code = INS_JMP else '0';

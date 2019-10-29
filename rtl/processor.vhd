@@ -118,7 +118,11 @@ architecture rtl of processor is
   signal reg_dst_dir_2_id : std_logic_vector( 4 downto 0);
   signal sign_ext_id      : std_logic_vector(31 downto 0);
   signal pc_jmp           : std_logic_vector(31 downto 0);
+  signal pc_branch        : std_logic_vector(31 downto 0);
+  signal pc_src           : std_logic_vector( 1 downto 0);
   signal if_id_wr_en      : std_logic;
+  signal branch           : std_logic;
+  signal branch_effective : std_logic;
   -- Used in ID
   signal jmp : std_logic;
   -- Used in EX
@@ -126,7 +130,6 @@ architecture rtl of processor is
   signal alu_op_id  : std_logic_vector(1 downto 0);
   signal reg_dst_id : std_logic;
   -- Used in MEM
-  signal branch_id    : std_logic;
   signal mem_wr_en_id : std_logic;
   signal mem_rd_en_id : std_logic;
   -- Used in WB
@@ -134,7 +137,6 @@ architecture rtl of processor is
   signal reg_wr_en_id  : std_logic;
 
   ---------- EX segment signals ----------
-  signal pc_ex            : std_logic_vector(31 downto 0);
   signal pc_jmp_ex        : std_logic_vector(31 downto 0);
   signal reg_1_ex         : std_logic_vector(31 downto 0);
   signal reg_2_ex         : std_logic_vector(31 downto 0);
@@ -145,7 +147,6 @@ architecture rtl of processor is
   signal reg_dst_dir_2_ex : std_logic_vector( 4 downto 0);
   signal reg_dst_dir_ex   : std_logic_vector( 4 downto 0);
   signal sign_ext_ex      : std_logic_vector(31 downto 0);
-  signal z_flag_ex        : std_logic;
   signal alu_op_a         : std_logic_vector(31 downto 0);
   signal alu_op_b         : std_logic_vector(31 downto 0);
   signal alu_op_a_control : std_logic_vector( 1 downto 0);
@@ -157,7 +158,6 @@ architecture rtl of processor is
   signal alu_op_ex  : std_logic_vector(1 downto 0);
   signal reg_dst_ex : std_logic;
   -- Used in MEM
-  signal branch_ex    : std_logic;
   signal mem_wr_en_ex : std_logic;
   signal mem_rd_en_ex : std_logic;
   -- Used in WB
@@ -165,15 +165,11 @@ architecture rtl of processor is
   signal reg_wr_en_ex  : std_logic;
 
   ---------- MEM segment signals ----------
-  signal pc_mem          : std_logic_vector(31 downto 0);
   signal reg_2_mem       : std_logic_vector(31 downto 0);
   signal alu_res_mem     : std_logic_vector(31 downto 0);
   signal reg_dst_dir_mem : std_logic_vector( 4 downto 0);
-  signal z_flag_mem      : std_logic;
   signal data_mem        : std_logic_vector(31 downto 0);
-  signal pc_src          : std_logic;
   -- Used in MEM
-  signal branch_mem    : std_logic;
   signal mem_wr_en_mem : std_logic;
   signal mem_rd_en_mem : std_logic;
   -- Used in WB
@@ -197,7 +193,7 @@ begin
   iAddr <= pc_out;
   ins_if <= iDataIn;
 
-  pc_in <= pc_jmp when jmp = '1' else pc_if when pc_src = '0' else pc_mem;
+  pc_in <= pc_if when pc_src = "00" else pc_jmp when pc_src = "01" else pc_branch when pc_src = "10";
   pc_if <= pc_out + 4;
 
   ---------- ID segment connections ----------
@@ -207,7 +203,7 @@ begin
     alu_src    => alu_src_id,
     alu_op     => alu_op_id,
     reg_dst    => reg_dst_id,
-    branch     => branch_id,
+    branch     => branch,
     mem_wr_en  => mem_wr_en_id,
     mem_rd_en  => mem_rd_en_id,
     mem_to_reg => mem_to_reg_id,
@@ -234,6 +230,9 @@ begin
 
   sign_ext_id <= "00000000000000000" & ins_id(14 downto 0) when ins_id(15) = '0' else "11111111111111111" & ins_id(14 downto 0);
   pc_jmp <= "0000" & ins_id(25 downto 0) & "00";
+  branch_effective <= '1' when reg_1_id = reg_2_id else '0';
+  pc_branch <= pc_id + (sign_ext_id(29 downto 0) & "00");
+  pc_src <= "10" when branch = '1' and branch_effective = '1' else "01" when jmp = '1' else "00";
 
   ---------- EX segment connections ----------
 
@@ -248,8 +247,7 @@ begin
     op_a    => alu_op_a,
     op_b    => alu_op_b,
     control => control,
-    res     => alu_res_ex,
-    z_flag  => z_flag_ex
+    res     => alu_res_ex
   );
 
   forwarding_unit_port_map: forwarding_unit port map (
@@ -283,7 +281,6 @@ begin
     alu_res_mem when alu_op_b_control = "01" else
     reg_wr;
   reg_dst_dir_ex <= reg_dst_dir_1_ex when reg_dst_ex = '0' else reg_dst_dir_2_ex;
-  pc_jmp_ex <= pc_ex + (sign_ext_ex(29 downto 0) & "00");
 
   ---------- MEM segment connections ----------
 
@@ -293,8 +290,6 @@ begin
   dWrEn <= mem_wr_en_mem;
   dDataOut <= reg_2_mem;
   data_mem <= dDataIn;
-
-  pc_src <= branch_mem and z_flag_mem;
 
   ---------- WB segment connections ----------
 
@@ -326,7 +321,6 @@ begin
   process (clk, reset)
   begin
     if reset = '1' or (rising_edge(clk) and clk = '1' and id_ex_reset = '1') then
-      pc_ex <= (others => '0');
       reg_1_ex <= (others => '0');
       reg_2_ex <= (others => '0');
       reg_dir_1_ex <= (others => '0');
@@ -339,14 +333,12 @@ begin
       alu_op_ex <= (others => '0');
       reg_dst_ex <= '0';
       -- Used in MEM
-      branch_ex <= '0';
       mem_wr_en_ex <= '0';
       mem_rd_en_ex <= '0';
       -- Used in WB
       mem_to_reg_ex <= '0';
       reg_wr_en_ex <= '0';
     elsif rising_edge(clk) and clk = '1' then
-      pc_ex <= pc_id;
       reg_1_ex <= reg_1_id;
       reg_2_ex <= reg_2_id;
       reg_dir_1_ex <= reg_dir_1_id;
@@ -359,7 +351,6 @@ begin
       alu_op_ex <= alu_op_id;
       reg_dst_ex <= reg_dst_id;
       -- Used in MEM
-      branch_ex <= branch_id;
       mem_wr_en_ex <= mem_wr_en_id;
       mem_rd_en_ex <= mem_rd_en_id;
       -- Used in WB
@@ -372,26 +363,20 @@ begin
   process (clk, reset)
   begin
     if reset = '1' then
-      pc_mem <= (others => '0');
       reg_2_mem <= (others => '0');
       alu_res_mem <= (others => '0');
       reg_dst_dir_mem <= (others => '0');
-      z_flag_mem <= '0';
       -- Used in MEM
-      branch_mem <= '0';
       mem_wr_en_mem <= '0';
       mem_rd_en_mem <= '0';
       -- Used in WB
       mem_to_reg_mem <= '0';
       reg_wr_en_mem <= '0';
     elsif rising_edge(clk) and clk = '1' then
-      pc_mem <= pc_jmp_ex;
       reg_2_mem <= reg_2_ex;
       alu_res_mem <= alu_res_ex;
       reg_dst_dir_mem <= reg_dst_dir_ex;
-      z_flag_mem <= z_flag_ex;
       -- Used in MEM
-      branch_mem <= branch_ex;
       mem_wr_en_mem <= mem_wr_en_ex;
       mem_rd_en_mem <= mem_rd_en_ex;
       -- Used in WB
