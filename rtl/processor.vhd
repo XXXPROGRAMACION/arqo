@@ -90,13 +90,16 @@ architecture rtl of processor is
 
   component hazard_detection_unit
     port (
-      reg_dir_1   : in  std_logic_vector(4 downto 0);
-      reg_dir_2   : in  std_logic_vector(4 downto 0);
-      reg_dst_dir : in  std_logic_vector(4 downto 0);
-      mem_rd_en   : in  std_logic;
-      pc_wr_en    : out std_logic;
-      if_id_wr_en : out std_logic;
-      id_ex_reset : out std_logic
+      reg_dir_1          : in  std_logic_vector(4 downto 0);
+      reg_dir_2          : in  std_logic_vector(4 downto 0);
+      branch             : in  std_logic;
+      reg_dst_dir_next_1 : in  std_logic_vector(4 downto 0);
+      reg_dst_dir_next_2 : in  std_logic_vector(4 downto 0);
+      mem_rd_en_next_1   : in  std_logic;
+      mem_rd_en_next_2   : in  std_logic;
+      pc_wr_en           : out std_logic;
+      if_id_wr_en        : out std_logic;
+      id_ex_reset        : out std_logic
     );
   end component;
 
@@ -145,6 +148,7 @@ architecture rtl of processor is
   signal pc_jmp_ex        : std_logic_vector(31 downto 0);
   signal reg_1_ex         : std_logic_vector(31 downto 0);
   signal reg_2_ex         : std_logic_vector(31 downto 0);
+  signal reg_2_ex_fw      : std_logic_vector(31 downto 0);
   signal alu_res_ex       : std_logic_vector(31 downto 0);
   signal reg_dir_1_ex     : std_logic_vector( 4 downto 0);
   signal reg_dir_2_ex     : std_logic_vector( 4 downto 0);
@@ -239,6 +243,19 @@ begin
     op_b_control       => reg_2_control
   );
 
+  hazard_detection_unit_port_map: hazard_detection_unit port map (
+    reg_dir_1          => reg_dir_1_id,
+    reg_dir_2          => reg_dir_2_id,
+    branch             => branch,
+    reg_dst_dir_next_1 => reg_dst_dir_ex,
+    reg_dst_dir_next_2 => reg_dst_dir_mem,
+    mem_rd_en_next_1   => mem_rd_en_ex,
+    mem_rd_en_next_2   => mem_rd_en_mem,
+    pc_wr_en           => pc_wr_en,
+    if_id_wr_en        => if_id_wr_en,
+    id_ex_reset        => id_ex_reset
+  );
+
   reg_1_id <=
     reg_1      when reg_1_control = "00" else
     alu_res_ex when reg_1_control = "01" else
@@ -287,22 +304,14 @@ begin
     op_b_control       => alu_op_b_control
   );
 
-  hazard_detection_unit_port_map: hazard_detection_unit port map (
-    reg_dir_1   => reg_dir_1_id,
-    reg_dir_2   => reg_dir_2_id,
-    reg_dst_dir => reg_dst_dir_1_ex,
-    mem_rd_en   => mem_rd_en_ex,
-    pc_wr_en    => pc_wr_en,
-    if_id_wr_en => if_id_wr_en,
-    id_ex_reset => id_ex_reset
-  );
-
   alu_op_a <=
     reg_1_ex    when alu_op_a_control = "00" else
     alu_res_mem when alu_op_a_control = "01" else
     reg_wr;
   alu_op_b <=
     sign_ext_ex when alu_src_ex = '1' else
+    reg_2_ex_fw;
+  reg_2_ex_fw <=
     reg_2_ex    when alu_op_b_control = "00" else
     alu_res_mem when alu_op_b_control = "01" else
     reg_wr;
@@ -399,7 +408,7 @@ begin
       mem_to_reg_mem <= '0';
       reg_wr_en_mem <= '0';
     elsif rising_edge(clk) and clk = '1' then
-      reg_2_mem <= reg_2_ex;
+      reg_2_mem <= reg_2_ex_fw;
       alu_res_mem <= alu_res_ex;
       reg_dst_dir_mem <= reg_dst_dir_ex;
       -- Used in MEM

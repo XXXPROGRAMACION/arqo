@@ -51,6 +51,13 @@ main:
   j fin
   fin_mal:
   add $12, $1, $zero # En r12 un 1
+  # Resultado esperado:
+  # r1 = 1
+  # r2 = 2
+  # r3 = 3
+  # r4 = 4
+  # r5 = 5
+  # Los demás registros a 0
   fin:
   j fin
   nop
