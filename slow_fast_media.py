@@ -4,7 +4,7 @@ slow_fast_averages = {}
 
 for line in file.readlines():
     words = line.split()
-    n = float(words[0])
+    n = int(words[0])
     slow_time = float(words[1])
     fast_time = float(words[2])
     if slow_fast_averages.get(n) is None:
