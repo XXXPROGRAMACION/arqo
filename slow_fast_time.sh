@@ -33,11 +33,11 @@ for ((r = 1; r <= n_repeticiones; r += 1)); do
 		slowTime=$(./slow $n | grep 'time' | awk '{print $3}')
 		fastTime=$(./fast $n | grep 'time' | awk '{print $3}')
 
-		python slow_fast_media.py
-
 		echo "$n	$slowTime	$fastTime" >> $f_dat
 	done
 done
+
+python slow_fast_media.py slow_fast_time.dat
 
 echo "Generating plot..."
 # llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
