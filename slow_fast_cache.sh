@@ -4,8 +4,8 @@
 
 # inicializar variables
 p=16%7+4
-n_pasos=16
-n_repeticiones=10
+n_pasos=3 #Antes 16
+n_repeticiones=2 #Antes 10
 n_inicio=$((2000+512*p))
 tam_paso=64
 n_final=$((n_inicio+(n_pasos-1)*tam_paso))
@@ -40,12 +40,12 @@ for ((r = 1; r <= n_repeticiones; r += 1)); do
 
 			echo " ---> n: $n / $n_final..."
 			
-			valgrind --tool=cachegrind --cachegrind-out-file=cachegrind.out --I1=$tam_cache,1,64 --D1=$tam_cache,1,64 --LL=8388608,1,64 ./slow $n
+			valgrind -q --tool=cachegrind --cachegrind-out-file=cachegrind.out --I1=$tam_cache,1,64 --D1=$tam_cache,1,64 --LL=8388608,1,64 ./slow $n
 			slowData=$(cg_annotate cachegrind.out | grep 'PROGRAM TOTALS')
 			slowRE=$(echo $slowData | awk '{print $4}')
 			slowWE=$(echo $slowData | awk '{print $7}')
 			
-			valgrind --tool=cachegrind --cachegrind-out-file=cachegrind.out --I1=$tam_cache,1,64 --D1=$tam_cache,1,64 --LL=8388608,1,64 ./fast $n
+			valgrind -q --tool=cachegrind --cachegrind-out-file=cachegrind.out --I1=$tam_cache,1,64 --D1=$tam_cache,1,64 --LL=8388608,1,64 ./fast $n
 			fastData=$(cg_annotate cachegrind.out | grep 'PROGRAM TOTALS')
 			fastRE=$(echo $fastData | awk '{print $4}')
 			fastWE=$(echo $fastData | awk '{print $7}')
@@ -59,24 +59,41 @@ done
 
 tam_cache=$tam_inicio
 for ((t = 1; t <= n_tams; t += 1)); do
-	python slow_fast_media.py $f_dat$tam_cache.dat
+	python3 slow_fast_media.py $f_dat$tam_cache.dat
 
-	tam_cache=$((tam_cache*2))
-done
+	echo "Generating plot for size $tam_cache..."
+	# llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
+	# estándar el script que está entre "<< END_GNUPLOT" y "END_GNUPLOT"
+	
 
-echo "Generating plot..."
-# llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
-# estándar el script que está entre "<< END_GNUPLOT" y "END_GNUPLOT"
 gnuplot << END_GNUPLOT
-set title "Slow-Fast Execution Time"
-set ylabel "Execution time (s)"
+set title "Slow-Fast Cache Read Fails"
+set ylabel "Read Fails"
 set xlabel "Matrix Size"
 set key right bottom
 set grid
 set term png
-set output "$f_png"
-plot "$f_dat" using 1:2 with lines lw 2 title "slow", \
-     "$f_dat" using 1:3 with lines lw 2 title "fast"
+set output "$f_png_lectura$tam_cache.png"
+plot "$f_dat$tam_cache.dat" using 1:2 with lines lw 2 title "slow", \
+    "$f_dat$tam_cache.dat" using 1:4 with lines lw 2 title "fast"
 replot
 quit
 END_GNUPLOT
+
+gnuplot << END_GNUPLOT
+set title "Slow-Fast Cache Write Fails"
+set ylabel "Write Fails"
+set xlabel "Matrix Size"
+set key right bottom
+set grid
+set term png
+set output "$f_png_escritura$tam_cache.png"
+plot "$f_dat$tam_cache.dat" using 1:3 with lines lw 2 title "slow", \
+    "$f_dat$tam_cache.dat" using 1:5 with lines lw 2 title "fast"
+replot
+quit
+END_GNUPLOT
+
+
+	tam_cache=$((tam_cache*2))
+done
