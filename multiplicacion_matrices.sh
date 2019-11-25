@@ -4,9 +4,9 @@
 
 # inicializar variables
 p=16%7+4
-n_pasos=10 #Antes 16
+n_pasos=16 #Antes 16
 n_repeticiones=2 #Antes 10
-n_inicio=10 #Antes $((256+256*p))
+n_inicio=$((256+256*p)) #Antes $((256+256*p))
 tam_paso=16
 n_final=$((n_inicio+(n_pasos-1)*tam_paso))
 f_dat=mult

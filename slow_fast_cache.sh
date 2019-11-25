@@ -4,7 +4,7 @@
 
 # inicializar variables
 p=16%7+4
-n_pasos=3 #Antes 16
+n_pasos=16 #Antes 16
 n_repeticiones=2 #Antes 10
 n_inicio=$((2000+512*p))
 tam_paso=64
