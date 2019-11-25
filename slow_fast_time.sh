@@ -37,7 +37,7 @@ for ((r = 1; r <= n_repeticiones; r += 1)); do
 	done
 done
 
-python slow_fast_media.py slow_fast_time.dat
+python3 slow_fast_media.py slow_fast_time.dat
 
 echo "Generating plot..."
 # llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
