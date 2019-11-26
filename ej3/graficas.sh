@@ -1,20 +1,19 @@
-# FICHERO PARA PROBAR LA GENERACIÓN DE GRÁFICAS PARA EL EJ3
 # Ejemplo script, para P3 arq 2019-2020
 
 #!/bin/bash
 
 # inicializar variables
 p=16%7+4
-n_pasos=10 #Antes 16
+n_pasos=16 #Antes 16
 n_repeticiones=2 #Antes 10
-n_inicio=10 #Antes $((256+256*p))
+n_inicio=$((256+256*p)) #Antes $((256+256*p))
 tam_paso=16
 n_final=$((n_inicio+(n_pasos-1)*tam_paso))
 f_dat=mult
 f_time_png=mult_time
 f_cache_png=mult_cache
 
-python3 slow_fast_media.py $f_dat.dat
+python3 calculo_medias.py $f_dat.dat
 
 echo "Generating plots..."
 gnuplot << END_GNUPLOT

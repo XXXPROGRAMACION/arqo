@@ -16,7 +16,6 @@ f_png_lectura=cache_lectura_
 f_png_escritura=cache_escritura_
 
 
-
 tam_cache=$tam_inicio
 for ((t = 1; t <= n_tams; t += 1)); do
 	python3 calculo_medias.py $f_dat$tam_cache.dat

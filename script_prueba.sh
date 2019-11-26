@@ -1,2 +1,0 @@
-bash multiplicacion_matrices.sh
-bash slow_fast_cache.sh
