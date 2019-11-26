@@ -26,7 +26,7 @@ for ((t = 1; t <= n_tams; t += 1)); do
 	
 
 gnuplot << END_GNUPLOT
-set title "Slow-Fast Cache Read Fails (cache $tam_cache bytes)"
+set title "Slow-Fast Cache Read Fails"
 set ylabel "Read Fails"
 set xlabel "Matrix Size"
 set key right bottom
@@ -40,7 +40,7 @@ quit
 END_GNUPLOT
 
 gnuplot << END_GNUPLOT
-set title "Slow-Fast Cache Write Fails (cache $tam_cache bytes)"
+set title "Slow-Fast Cache Write Fails"
 set ylabel "Write Fails"
 set xlabel "Matrix Size"
 set key right bottom

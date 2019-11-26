@@ -5,8 +5,8 @@
 # inicializar variables
 p=16%7+4
 n_pasos=16 #Antes 16
-n_repeticiones=2 #Antes 10
-n_inicio=$((2000+512*p))
+n_repeticiones=1 #Antes 10
+n_inicio=$((16+16*p))
 tam_paso=64
 n_final=$((n_inicio+(n_pasos-1)*tam_paso))
 n_tams=4
@@ -59,7 +59,6 @@ done
 
 tam_cache=$tam_inicio
 for ((t = 1; t <= n_tams; t += 1)); do
-	python3 calculo_medias.py $f_dat$tam_cache.dat
 
 	echo "Generating plot for size $tam_cache..."
 	# llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
@@ -67,7 +66,7 @@ for ((t = 1; t <= n_tams; t += 1)); do
 	
 
 gnuplot << END_GNUPLOT
-set title "Slow-Fast Cache Read Fails (cache $tam_cache bytes)"
+set title "Slow-Fast Cache Read Fails"
 set ylabel "Read Fails"
 set xlabel "Matrix Size"
 set key right bottom
@@ -81,7 +80,7 @@ quit
 END_GNUPLOT
 
 gnuplot << END_GNUPLOT
-set title "Slow-Fast Cache Write Fails (cache $tam_cache bytes)"
+set title "Slow-Fast Cache Write Fails"
 set ylabel "Write Fails"
 set xlabel "Matrix Size"
 set key right bottom
