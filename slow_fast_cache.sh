@@ -16,50 +16,10 @@ f_png_lectura=cache_lectura_
 f_png_escritura=cache_escritura_
 
 
-tam_cache=$tam_inicio
-for ((t = 1; t <= n_tams; t += 1)); do
-	# borrar el fichero DAT y el fichero PNG
-	rm -f $f_dat$tam_cache.dat $f_png_lectura$tam_cache.png $f_png_escritura$tam_cache.png
-
-	# generar el fichero DAT vacío
-	touch $f_dat$tam_cache.dat
-
-	tam_cache=$((tam_cache*2))
-done
-
-echo "Running slow and fast..."
-for ((r = 1; r <= n_repeticiones; r += 1)); do
-	echo "Repeticion $r:"
-
-	tam_cache=$tam_inicio
-	for ((t = 1; t <= n_tams; t += 1)); do
-		echo " -> Tamaño: $tam_cache..."
-
-		for ((p = 0; p < n_pasos; p += 1)); do
-			n=$((n_inicio+tam_paso*p))
-
-			echo " ---> n: $n / $n_final..."
-			
-			valgrind -q --tool=cachegrind --cachegrind-out-file=cachegrind.out --I1=$tam_cache,1,64 --D1=$tam_cache,1,64 --LL=8388608,1,64 ./slow $n
-			slowData=$(cg_annotate cachegrind.out | grep 'PROGRAM TOTALS')
-			slowRE=$(echo $slowData | awk '{print $4}')
-			slowWE=$(echo $slowData | awk '{print $7}')
-			
-			valgrind -q --tool=cachegrind --cachegrind-out-file=cachegrind.out --I1=$tam_cache,1,64 --D1=$tam_cache,1,64 --LL=8388608,1,64 ./fast $n
-			fastData=$(cg_annotate cachegrind.out | grep 'PROGRAM TOTALS')
-			fastRE=$(echo $fastData | awk '{print $4}')
-			fastWE=$(echo $fastData | awk '{print $7}')
-
-			echo "$n	$slowRE	$slowWE	$fastRE	$fastWE" >> $f_dat$tam_cache.dat
-		done
-
-		tam_cache=$((tam_cache*2))
-	done
-done
 
 tam_cache=$tam_inicio
 for ((t = 1; t <= n_tams; t += 1)); do
-	python3 slow_fast_media.py $f_dat$tam_cache.dat
+	python3 calculo_medias.py $f_dat$tam_cache.dat
 
 	echo "Generating plot for size $tam_cache..."
 	# llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada

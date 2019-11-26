@@ -9,8 +9,8 @@ n_repeticiones=10
 n_inicio=$((10000+1024*p))
 tam_paso=64
 n_final=$((n_inicio+(n_pasos-1)*tam_paso))
-f_dat=slow_fast_time
-f_png=slow_fast_time
+f_dat=time_slow_fast
+f_png=time_slow_fast
 
 # borrar el fichero DAT y el fichero PNG
 rm -f $f_dat.dat f_png.png
@@ -34,7 +34,7 @@ for ((r = 1; r <= n_repeticiones; r += 1)); do
 done
 
 
-python3 slow_fast_media.py $f_dat.dat
+python3 calculo_medias.py $f_dat.dat
 
 echo "Generating plot..."
 # llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada

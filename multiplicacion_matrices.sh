@@ -41,7 +41,7 @@ for ((r = 1; r <= n_repeticiones; r += 1)); do
 	done
 done
 
-python3 slow_fast_media.py $f_dat.dat
+python3 calculo_medias.py $f_dat.dat
 
 echo "Generating plots..."
 gnuplot << END_GNUPLOT
