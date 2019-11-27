@@ -4,8 +4,8 @@
 
 # inicializar variables
 p=16%7+4
-n_pasos=16 #Antes 16
-n_repeticiones=2 #Antes 10
+n_pasos=16
+n_repeticiones=10
 n_inicio=$((32+16*p))
 tam_paso=16
 n_final=$((n_inicio+(n_pasos-1)*tam_paso))
