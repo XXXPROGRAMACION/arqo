@@ -1,0 +1,8 @@
+1.1 Sí que se pueden lanzar más threads que cores tenga el sistema. Puede tener sentido hacerlo para aprovechar los tiempos de bloqueo (E/S), pero no se va a poder ejecutar todos de manera paralela.
+1.2 Suponiendo que los hilos son "workers" que se reparten una misma tarea, el número de hilos debería ser proporcional al número de núcleos. Por lo tanto debería haber más hilos en un clúster que en un ordenador personal.
+1.3 Para las variables privadas OpenMP asigna posiciones de memoria diferentes a cada hilo. 
+1.4 El valor de la variable privada no está inicializado.
+1.5 El valor de la variable se pierde.
+1.6 No, las variables públicas se comparten entre hilos. Su valor al iniciar la región paralela es el valor que tenía asignado previamente. Al terminar la región paralela no se pierde su valor.
+
+2.1 El resultado correcto es el del archivo "pescalar_par2". En el primero hay una condición de carrera, ya que los diferentes hilos van pisándose los valores de las sumas parciales. Por esto el valor obtenido en el primer ejecutable es sistemáticamente menor al obtenido en el segundo, además de ser fluctuante según la ejecución (el segundo ejecutable no lo es porque los valores generados son pseudoaleatorios y la semilla es igual en las diferentes ejecuciones). 
