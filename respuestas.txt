@@ -6,3 +6,9 @@
 1.6 No, las variables públicas se comparten entre hilos. Su valor al iniciar la región paralela es el valor que tenía asignado previamente. Al terminar la región paralela no se pierde su valor.
 
 2.1 El resultado correcto es el del archivo "pescalar_par2". En el primero hay una condición de carrera, ya que los diferentes hilos van pisándose los valores de las sumas parciales. Por esto el valor obtenido en el primer ejecutable es sistemáticamente menor al obtenido en el segundo, además de ser fluctuante según la ejecución (el segundo ejecutable no lo es porque los valores generados son pseudoaleatorios y la semilla es igual en las diferentes ejecuciones). 
+
+3.1 El que peor rendimiento tiene es el que paraleliza el bucle más interno. El motivo principal es que es necesaria una reducción posterior, ya que los diferentes hilos modifican el mismo elemento de la matriz.
+3.2 El que mejor rendimiento tiene (con poca diferencia) es el más externo. Su ventaja respecto al intermedio es que los hilos solo deben "sincronizarse" al finalizar todo el proceso y no en cada iteración del bucle externo. Por otro lado tiene la desventaja de que, al repartir bloques de trabajo de mayor tamaño, es más probable que el resultado tenga que esperar a que unos pocos hilos acaben su parte, mientras que el resto podrían haber terminado.
+
+4.1 El programa utiliza cien mil rectángulos para realizar el cómputo
+4.2 La principal diferencia entre los dos programas consiste en que la versión 4 utiliza una variable auxiliar para los cálculos, mientras que en la primera se produce false sharing 
