@@ -9,3 +9,6 @@
 
 3.1 El que peor rendimiento tiene es el que paraleliza el bucle más interno. El motivo principal es que es necesaria una reducción posterior, ya que los diferentes hilos modifican el mismo elemento de la matriz.
 3.2 El que mejor rendimiento tiene (con poca diferencia) es el más externo. Su ventaja respecto al intermedio es que los hilos solo deben "sincronizarse" al finalizar todo el proceso y no en cada iteración del bucle externo. Por otro lado tiene la desventaja de que, al repartir bloques de trabajo de mayor tamaño, es más probable que el resultado tenga que esperar a que unos pocos hilos acaben su parte, mientras que el resto podrían haber terminado.
+
+4.1 El programa utiliza cien mil rectángulos para realizar el cómputo
+4.2 La principal diferencia entre los dos programas consiste en que la versión 4 utiliza una variable auxiliar para los cálculos, mientras que en la primera se produce false sharing 
