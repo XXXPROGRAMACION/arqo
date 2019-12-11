@@ -1,0 +1,3 @@
+2.3 | 2.4 | 2.5 En el tests que hemos realizado todos los tamaños son lo suficientemente grandes como para que el trabajo adicional de crear los nuevos hilos sea insignificante en comparación al beneficio obtenido. Podría no compensar si los tamaños fuesen muy pequeños y no se rentabilizase la creación de hilos, si el procesador estuviese muy saturado y no dispusiese de núcleos ociosos o si los problemas generados por la paralelización del trabajo (procesos muy dependientes entre sí) superasen los beneficios obtenidos.
+2.6 Siempre es así.
+2.7 Como ya se ha mencionado, con vectores muy pequeños el trabajo que supone crear los hilos tendría un impacto mucho mayor. Con vectores muy grandes seguirá funcionando en torno a n veces más rápido una paralelización en n núcleos.

@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	/* Bloque de computo */
 	sum = 0;
 	#pragma omp parallel for reduction(+:sum) num_threads(threads)
-	for(k=0;k<M;k++)
+	for(k=0;k<size;k++)
 	{
 		sum = sum + A[k]*B[k];
 	}
