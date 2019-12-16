@@ -1,5 +1,5 @@
 /*********************************************************/
-/* Cálculo PI: Método de integración - Version OpenMP	 */
+/* Cï¿½lculo PI: Mï¿½todo de integraciï¿½n - Version OpenMP	 */
 /* false sharing 					 */
 /*********************************************************/
 
@@ -11,19 +11,26 @@
 
 int main( int argc, char *argv[] ) 
 {
-	int i, n = 100000000, numProcs, numThreads;
+	int i, n, numProcs, numThreads;
 	int datasz, linesz, padsz;
 	double h, pi, *sum = NULL,t = 0;
 	struct timeval t1,t2;
 	FILE *f;
 	char buf[512];
 
+	if (argc != 2) {
+		printf("NÃºmero de argumentos invÃ¡lido.\n");
+		return 1;
+	}
+
+	n = atoi(argv[1]);
 	// Obtenemos el numero de cores del equipo
 	numProcs = omp_get_num_procs();
 	printf("Numero de cores del equipo: %d\n", numProcs);
 	omp_set_num_threads( numProcs );
 
-	datasz = sizeof(double);
+	/*datasz = sizeof(double);*/
+	datasz = 12;
 	printf("Double size: %d bytes\n", datasz);
 	f = popen("getconf -a | grep CACHE | grep \"3_CACHE_LINESIZE\" | awk '{print $2}'", "r");
 	fgets(buf, sizeof(buf), f);

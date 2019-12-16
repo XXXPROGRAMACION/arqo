@@ -1,5 +1,5 @@
 /*********************************************************/
-/* Cálculo PI: Método de integración - Version OpenMP	 */
+/* Cï¿½lculo PI: Mï¿½todo de integraciï¿½n - Version OpenMP	 */
 /* false sharing 					 */
 /*********************************************************/
 
@@ -11,9 +11,16 @@
 
 int main( int argc, char *argv[] ) 
 {
-	int i, n = 100000000, numProcs, numThreads;
+	int i, n, numProcs, numThreads;
 	double h, pi, *sum = NULL,t = 0;
 	struct timeval t1,t2;
+
+	if (argc != 2) {
+		printf("NÃºmero de argumentos invÃ¡lido.\n");
+		return 1;
+	}
+
+	n = atoi(argv[1]);
 
 	// Obtenemos el numero de cores del equipo
 	numProcs = omp_get_num_procs();
@@ -21,7 +28,7 @@ int main( int argc, char *argv[] )
 	omp_set_num_threads( numProcs );
 	
 	// Solicitamos memoria para la suma de cada proceso
-	sum = (double*) malloc (sizeof(double)*numProcs);	
+	sum = (double*) malloc (sizeof(double)*numProcs);
 
 	gettimeofday(&t1,NULL);
 
@@ -40,7 +47,7 @@ int main( int argc, char *argv[] )
 		sum[tid] = 0.0;
 		for(i = tid + 1; i <= n; i += numThreads) 
 		{
-			x = h * ((double) i - 0.5);
+			x = h * ((double) i-0.5);
 			sum[tid] += 4.0 / (1.0 + x*x);
 		}
 	}

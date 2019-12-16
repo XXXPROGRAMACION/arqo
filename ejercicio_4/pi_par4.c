@@ -1,5 +1,5 @@
 /*********************************************************/
-/*Cálculo PI: Método de integración - Version OpenMP	 */
+/*Cï¿½lculo PI: Mï¿½todo de integraciï¿½n - Version OpenMP	 */
 /*********************************************************/
 
 #include <sys/time.h>
@@ -9,9 +9,16 @@
 
 int main( int argc, char *argv[] ) 
 {
-	int i, n=100000000, numProcs, numThreads;
+	int i, n, numProcs, numThreads;
 	double h, pi, *sum = NULL,t = 0;
 	struct timeval t1,t2;
+
+	if (argc != 2) {
+		printf("NÃºmero de argumentos invÃ¡lido.\n");
+		return 1;
+	}
+
+	n = atoi(argv[1]);
 
 	// Obtenemos el numero de cores del equipo
 	numProcs = omp_get_num_procs();
@@ -37,7 +44,7 @@ int main( int argc, char *argv[] )
 		tid = omp_get_thread_num();
 
 		priv_sum = 0.0;
-		for(i = tid + 1; i <= n; i+=numThreads) 
+		for(i = tid + 1; i <= n; i += numThreads) 
 		{
 			x = h * ((double) i-0.5);
 			priv_sum += 4.0 / (1.0 + x*x);
@@ -56,5 +63,6 @@ int main( int argc, char *argv[] )
 
 	// Liberamos memoria
 	free(sum);
+
 	return 0;
 }
