@@ -3,10 +3,10 @@
 # inicializar variables
 p=$((16%8+1))
 n_pasos=10
-n_repeticiones=2
-tam_inicio=$((1000000*p))
-tam_paso=1000000
-tam_final=$((1000000*(p+10)))
+n_repeticiones=10
+tam_inicio=$((100000000*p))
+tam_paso=100000000
+tam_final=$((100000000*(p+10)))
 f_dat_tiempos=graficas/tiempos_par
 
 mkdir graficas

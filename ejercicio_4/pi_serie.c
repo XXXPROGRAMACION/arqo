@@ -1,5 +1,5 @@
 /*********************************************************/
-/*Cálculo PI: Método de integración - Version secuencial */
+/*Cï¿½lculo PI: Mï¿½todo de integraciï¿½n - Version secuencial */
 /*********************************************************/
 
 #include <sys/time.h>
@@ -8,9 +8,16 @@
 
 int main( int argc, char *argv[] ) 
 { 
-	int i, n = 100000000;
+	int i, n;
 	double x, h, pi, sum = 0.0, t = 0;
 	struct timeval t1,t2;
+
+	if (argc != 2) {
+		printf("NÃºmero de argumentos invÃ¡lido.\n");
+		return 1;
+	}
+
+	n = atoi(argv[1]);
 
 	gettimeofday(&t1,NULL);
 	

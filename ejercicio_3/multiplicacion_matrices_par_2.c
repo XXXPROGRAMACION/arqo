@@ -5,21 +5,22 @@
 
 #include "arqo4.h"
 
-void compute(float **matrix1, float **matrix2, float **matrix3, int n);
+void compute(float **matrix1, float **matrix2, float **matrix3, int n, int num_threads);
 
 int main( int argc, char *argv[]) {
-	int n;
+	int n, num_threads;
 	float **matrix1 = NULL, **matrix2 = NULL, **matrix3 = NULL;
 	struct timeval fin, ini;
 
 	printf("Word size: %ld bits\n", 8*sizeof(float));
 
-	if(argc != 2) {
-		printf("Error: ./%s <matrix size>\n", argv[0]);
+	if(argc != 3) {
+		printf("Error: ./%s <matrix size> <num_threads>\n", argv[0]);
 		return -1;
 	}
 
 	n = atoi(argv[1]);
+	num_threads = atoi(argv[2]);
 	matrix1 = generateMatrix(n);
 	matrix2 = generateMatrix(n);
 	matrix3 = generateEmptyMatrix(n);
@@ -33,7 +34,7 @@ int main( int argc, char *argv[]) {
 	gettimeofday(&ini,NULL);
 
 	/* Main computation */
-	compute(matrix1 ,matrix2, matrix3, n);
+	compute(matrix1 ,matrix2, matrix3, n, num_threads);
 	/* End of computation */
 
 	gettimeofday(&fin,NULL);
@@ -45,11 +46,11 @@ int main( int argc, char *argv[]) {
 	return 0;
 }
 
-void compute(float **matrix1, float **matrix2, float **matrix3, int n) {
+void compute(float **matrix1, float **matrix2, float **matrix3, int n, int num_threads) {
 	int i, j, k;
 
     for (i = 0; i < n; i++) {
-		#pragma omp parallel for private(k)
+		#pragma omp parallel for private(k) num_threads(num_threads)
         for (j = 0; j < n; j++) {
 			for (k = 0; k < n; k++) {
                 matrix3[i][j] += matrix1[i][k]*matrix2[k][j];

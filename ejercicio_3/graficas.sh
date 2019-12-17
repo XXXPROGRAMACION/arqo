@@ -3,7 +3,6 @@
 # inicializar variables
 p=$((16%8+1))
 n_pasos=10
-n_repeticiones=1
 tam_inicio=$((512+p))
 tam_paso=64
 tam_final=$((1024+512+p))

@@ -2,7 +2,6 @@
 
 # inicializar variables
 n_pasos=10
-n_repeticiones=1
 tam_inicio=$((10000000))
 tam_paso=5000000
 tam_final=$((tam_inicio+(n_pasos-1)*tam_paso))

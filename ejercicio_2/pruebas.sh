@@ -2,9 +2,9 @@
 
 # inicializar variables
 n_pasos=10
-n_repeticiones=1 # antes 5
-tam_inicio=$((10000000)) # antes 100000000 (falta 1 0s)
-tam_paso=5000000 # antes 50000000 (faltan 1 0s)
+n_repeticiones=10
+tam_inicio=$((10000000))
+tam_paso=5000000
 tam_final=$((tam_inicio+(n_pasos-1)*tam_paso))
 n_nucleos_inicio=1
 n_nucleos_final=4

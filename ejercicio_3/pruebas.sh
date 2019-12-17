@@ -3,10 +3,11 @@
 # inicializar variables
 p=$((16%8+1))
 n_pasos=10
-n_repeticiones=1
+n_repeticiones=10
 tam_inicio=$((512+p))
 tam_paso=64
 tam_final=$((1024+512+p))
+num_threads=3
 f_dat_tiempos=graficas/tiempos
 
 mkdir graficas
@@ -21,7 +22,7 @@ for ((r = 1; r <= n_repeticiones; r += 1)); do
 		echo " ---> Tam: $tam / $tam_final..."
 		
 		tiempo_serie=$(./multiplicacion_matrices_serie $tam | grep 'time' | awk '{print $3}')
-		tiempo_par=$(./multiplicacion_matrices_par_1 $tam | grep 'time' | awk '{print $3}')
+		tiempo_par=$(./multiplicacion_matrices_par_3 $tam $num_threads | grep 'time' | awk '{print $3}')
 
 		echo "$tam $tiempo_serie $tiempo_par" >> $f_dat_tiempos.dat
 	done
